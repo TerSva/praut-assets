@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praut s.r.o. – Visual Book & Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           PRAUT DESIGN SYSTEM v2.0
+           Dark Navy + Purple Accent | Sjednocená identita
+           Background: #0a0e2e (Navy Dark) — jak na screenshotech
+           Primary Accent: #8D2AF3 (Purple) — firemní barva
+           Secondary Accent: #3B4EF0 (Blue) — podpůrná barva
+        ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            /* ─── NAVY BACKGROUNDS (primární tmavé pozadí) ─── */
+            --navy-950: #060818;
+            --navy-900: #0a0e2e;   /* ← hlavní pozadí webu */
+            --navy-800: #0f1440;
+            --navy-700: #141a52;
+            --navy-600: #1a2266;
+            --navy-500: #222c85;
+
+            /* ─── BRAND PURPLE (akcentní barva) ─── */
+            --purple-50:  #FAF5FF;
+            --purple-100: #F2E7FF;
+            --purple-200: #E4CFFF;
+            --purple-300: #D6B0FF;
+            --purple-400: #BC7EFF;
+            --purple-500: #A54CFF;
+            --purple-600: #8D2AF3;   /* ← hlavní purple */
+            --purple-700: #7520CC;
+            --purple-800: #55178C;
+            --purple-900: #390269;
+
+            /* ─── BLUE ACCENT (podpůrná) ─── */
+            --blue-50:  #EEF2FF;
+            --blue-100: #D8E0FF;
+            --blue-200: #B0C0FF;
+            --blue-300: #8099FF;
+            --blue-400: #506FFB;
+            --blue-500: #3B4EF0;
+            --blue-600: #2F3FCC;
+            --blue-700: #283487;
+            --blue-800: #1E275F;
+            --blue-900: #181E4E;
+
+            /* ─── CARD / SURFACE BARVY ─── */
+            --surface-1: #0f1440;    /* nejhlubší karta */
+            --surface-2: #141a52;    /* karta na pozadí */
+            --surface-3: rgba(141,42,243,0.08);  /* zvýrazněná karta */
+            --surface-border: rgba(141,42,243,0.18);
+
+            /* ─── SEMANTIC ─── */
+            --success:  #34D399;
+            --success-bg: rgba(52, 211, 153, 0.12);
+            --warning:  #FBBF24;
+            --warning-bg: rgba(251, 191, 36, 0.12);
+            --error:    #F87171;
+            --error-bg: rgba(248, 113, 113, 0.12);
+            --info:     #506FFB;
+            --info-bg:  rgba(80, 111, 251, 0.12);
+
+            /* ─── GRADIENTY ─── */
+            --gradient-brand:      linear-gradient(135deg, #8D2AF3 0%, #3B4EF0 100%);
+            --gradient-brand-wide: linear-gradient(135deg, #BC7EFF 0%, #8D2AF3 45%, #3B4EF0 100%);
+            --gradient-dark:       linear-gradient(145deg, #0a0e2e 0%, #141a52 100%);
+            --gradient-card:       linear-gradient(145deg, #0f1440 0%, #141a52 100%);
+            --gradient-purple:     linear-gradient(135deg, rgba(141,42,243,0.3) 0%, rgba(59,78,240,0.15) 100%);
+            --gradient-hero:       linear-gradient(135deg, #8D2AF3 0%, #506FFB 60%, #3B4EF0 100%);
+
+            /* ─── STÍNY A GLOW ─── */
+            --shadow-sm:       0 1px 3px rgba(0,0,0,0.4);
+            --shadow-md:       0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg:       0 8px 32px rgba(0,0,0,0.5);
+            --shadow-xl:       0 16px 56px rgba(0,0,0,0.6);
+            --shadow-glow:     0 0 20px rgba(141,42,243,0.35);
+            --shadow-glow-lg:  0 0 40px rgba(141,42,243,0.28), 0 0 80px rgba(59,78,240,0.14);
+            --shadow-glow-btn: 0 4px 24px rgba(141,42,243,0.5);
+
+            /* ─── TYPOGRAFIE ─── */
+            --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Fira Code', monospace;
+
+            /* ─── SPACING (4px základ) ─── */
+            --space-1: 4px;  --space-2: 8px;   --space-3: 12px;
+            --space-4: 16px; --space-5: 20px;  --space-6: 24px;
+            --space-8: 32px; --space-10: 40px; --space-12: 48px;
+            --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+            /* ─── BORDER RADIUS ─── */
+            --radius-sm: 4px;   --radius-md: 8px;   --radius-lg: 12px;
+            --radius-xl: 16px;  --radius-2xl: 24px; --radius-full: 9999px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ BASE */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--navy-900);
+            color: var(--purple-50);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 10% 20%, rgba(141,42,243,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 90% 15%, rgba(59,78,240,0.06) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 30% at 50% 90%, rgba(80,111,251,0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: var(--space-20) 0;
+            border-bottom: 1px solid rgba(141,42,243,0.1);
+        }
+        section:last-of-type { border-bottom: none; }
+
+        /* ═══════════════════════════════════════════════════════════════ TYPO */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--purple-600);
+            margin-bottom: var(--space-4);
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #FAF5FF 0%, #D6B0FF 60%, #BC7EFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-6);
+        }
+
+        .section-desc {
+            font-size: 1.125rem;
+            color: var(--purple-300);
+            max-width: 640px;
+            margin-bottom: var(--space-10);
+            font-weight: 400;
+        }
+
+        .mt-12 { margin-top: var(--space-12); }
+        .mb-2  { margin-bottom: var(--space-2); }
+        .mb-4  { margin-bottom: var(--space-4); }
+        .text-sm { font-size: 0.875rem; }
+
+        /* ═══════════════════════════════════════════════════════════════ NAV DOTS */
+        .toc {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        @media (min-width: 1400px) { .toc { display: flex; } }
+
+        .toc a {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(141,42,243,0.3);
+            border: 1px solid rgba(141,42,243,0.4);
+            transition: all 0.25s;
+            position: relative;
+        }
+        .toc a:hover, .toc a.active {
+            background: var(--purple-600);
+            box-shadow: 0 0 10px rgba(141,42,243,0.6);
+        }
+        .toc a::before {
+            content: attr(title);
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--purple-300);
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .toc a:hover::before { opacity: 1; }
+
+        /* ═══════════════════════════════════════════════════════════════ COVER */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: var(--space-10);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(141,42,243,0.18) 0%, transparent 65%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(80px);
+            animation: coverPulse 6s ease-in-out infinite;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59,78,240,0.12) 0%, transparent 70%);
+            top: 30%;
+            right: 15%;
+            filter: blur(60px);
+            animation: coverPulse 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes coverPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        .logo-hero {
+            position: relative;
+            z-index: 1;
+            padding: 20px 32px;
+            border-radius: var(--radius-2xl);
+            background: rgba(10,14,46,0.6);
+            border: 1px solid rgba(141,42,243,0.25);
+            box-shadow: var(--shadow-glow-lg);
+            backdrop-filter: blur(16px);
+            margin-bottom: var(--space-8);
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .cover .subtitle {
+            font-size: 1.25rem;
+            color: var(--purple-300);
+            font-weight: 500;
+            margin-bottom: var(--space-3);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s 0.2s ease both;
+        }
+
+        .cover .version {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--purple-600);
+            letter-spacing: 0.15em;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s 0.35s ease both;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ LOGO SECTION */
+        .logo-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-12);
+        }
+        @media (max-width: 640px) { .logo-display { grid-template-columns: 1fr; } }
+
+        .logo-card {
+            border-radius: var(--radius-xl);
+            padding: var(--space-10);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-4);
+            border: 1px solid var(--surface-border);
+        }
+        .logo-card.dark {
+            background: var(--gradient-card);
+        }
+        .logo-card.light {
+            background: #f0f0ff;
+        }
+        .logo-card .label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--purple-400);
+            letter-spacing: 0.1em;
+        }
+        .logo-card.light .label { color: var(--navy-700); }
+
+        .logo-text-display {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            font-size: 2.5rem;
+        }
+        .logo-text-display.gradient {
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-text-display.dark-text { color: var(--navy-900); }
+
+        .logo-variations {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+        @media (max-width: 640px) { .logo-variations { grid-template-columns: 1fr 1fr; } }
+
+        .logo-variation {
+            border-radius: var(--radius-lg);
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            padding: var(--space-6) var(--space-4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        .logo-variation .name {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--purple-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .clear-space-demo {
+            display: inline-flex;
+            padding: 32px;
+            border: 2px dashed rgba(141,42,243,0.3);
+            border-radius: var(--radius-xl);
+            position: relative;
+        }
+        .clear-space-demo::before, .clear-space-demo::after {
+            content: '← X →';
+            position: absolute;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--purple-600);
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ COLORS */
+        .color-palette { display: flex; flex-direction: column; gap: var(--space-10); }
+
+        .color-group-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--purple-100);
+            margin-bottom: var(--space-2);
+        }
+        .color-group-desc {
+            font-size: 0.875rem;
+            color: var(--purple-400);
+            margin-bottom: var(--space-4);
+        }
+
+        .gradient-swatches {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+        .gradient-swatch {
+            height: 80px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: var(--space-3) var(--space-4);
+            box-shadow: var(--shadow-md);
+        }
+        .gradient-swatch .name { font-size: 0.8125rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+        .gradient-swatch .value { font-family: var(--font-mono); font-size: 0.7rem; color: rgba(255,255,255,0.65); }
+
+        .color-swatches {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: var(--space-2);
+        }
+        @media (max-width: 640px) { .color-swatches { grid-template-columns: repeat(5, 1fr); } }
+
+        .color-swatch {
+            height: 64px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: flex-end;
+            padding: var(--space-1) var(--space-2);
+            position: relative;
+            cursor: default;
+            transition: transform 0.2s;
+        }
+        .color-swatch:hover { transform: scale(1.1); z-index: 2; }
+        .color-swatch .info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .color-swatch .shade { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(0,0,0,0.7); font-weight: 600; }
+        .color-swatch .hex   { font-family: var(--font-mono); font-size: 0.55rem; color: rgba(0,0,0,0.55); }
+
+        /* light swatches — dark text */
+        .color-swatch[style*="#FAF"], .color-swatch[style*="#F2E"], .color-swatch[style*="#E4C"],
+        .color-swatch[style*="#EEF"], .color-swatch[style*="#D8E"], .color-swatch[style*="#B0C"],
+        .color-swatch[style*="#E8F"] .shade { color: rgba(0,0,0,0.7); }
+
+        .rule-bar {
+            display: flex;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-4);
+        }
+        .r60 { flex: 60; background: var(--navy-900); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--purple-300); }
+        .r30 { flex: 30; background: var(--purple-50); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--navy-900); }
+        .r10 { flex: 10; background: var(--gradient-brand); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: white; }
+
+        /* ═══════════════════════════════════════════════════════════════ TYPOGRAPHY */
+        .type-specimen { display: flex; flex-direction: column; gap: var(--space-8); }
+
+        .type-family {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+        }
+        .type-family-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid rgba(141,42,243,0.12);
+        }
+        .type-family-name { font-size: 1.5rem; font-weight: 800; color: var(--purple-50); }
+        .type-family-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--purple-500); }
+        .type-sample { font-size: 2.5rem; font-weight: 700; color: var(--purple-100); line-height: 1.2; margin-bottom: var(--space-4); }
+        .type-alphabet { font-size: 1rem; color: var(--purple-300); letter-spacing: 0.05em; margin-bottom: var(--space-2); }
+        .type-weights { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4); }
+        .type-weight { color: var(--purple-200); font-size: 0.9rem; }
+
+        .type-scale { display: flex; flex-direction: column; gap: 0; }
+        .type-scale-item {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-6);
+            padding: var(--space-4) 0;
+            border-bottom: 1px solid rgba(141,42,243,0.08);
+        }
+        .type-scale-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple-600); min-width: 110px; }
+        .type-scale-sample { color: var(--purple-50); }
+
+        /* ═══════════════════════════════════════════════════════════════ COMPONENTS */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .component-card {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+        }
+        .component-card-full { grid-column: 1 / -1; }
+
+        .component-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--purple-300);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-family: var(--font-mono);
+            margin-bottom: var(--space-5);
+            padding-bottom: var(--space-3);
+            border-bottom: 1px solid rgba(141,42,243,0.12);
+        }
+
+        .component-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            align-items: flex-start;
+        }
+        .component-demo.flex-col { flex-direction: column; }
+        .component-demo.items-center { align-items: center; }
+        .flex { display: flex; }
+        .flex-col { display: flex; flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .flex.gap-3 { gap: var(--space-3); }
+        .flex.gap-4 { gap: var(--space-4); }
+        .flex.gap-6 { gap: var(--space-6); }
+        .flex-col.gap-3 { gap: var(--space-3); }
+        .flex-col.gap-4 { gap: var(--space-4); }
+        .flex-col.gap-6 { gap: var(--space-6); }
+        .w-full { width: 100%; }
+
+        /* ─── BUTTONS ─── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-primary);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            border-radius: var(--radius-lg);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary {
+            background: var(--gradient-brand);
+            color: white;
+            box-shadow: var(--shadow-glow-btn);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 28px rgba(141,42,243,0.65);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--purple-200);
+            border: 1px solid var(--surface-border);
+        }
+        .btn-secondary:hover {
+            background: var(--surface-3);
+            border-color: var(--purple-600);
+            color: var(--purple-100);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--purple-300);
+            border: 1.5px solid var(--purple-600);
+        }
+        .btn-outline:hover {
+            background: rgba(141,42,243,0.12);
+            color: var(--purple-100);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--purple-300);
+            border: none;
+        }
+        .btn-ghost:hover {
+            background: rgba(141,42,243,0.1);
+            color: var(--purple-100);
+        }
+        .btn-accent {
+            background: var(--blue-500);
+            color: white;
+            box-shadow: 0 4px 20px rgba(59,78,240,0.4);
+        }
+        .btn-accent:hover {
+            background: var(--blue-400);
+            box-shadow: 0 6px 28px rgba(59,78,240,0.55);
+            transform: translateY(-1px);
+        }
+        .btn-danger {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid rgba(248,113,113,0.3);
+        }
+        .btn-danger:hover {
+            background: rgba(248,113,113,0.2);
+        }
+        .btn-sm { padding: var(--space-2) var(--space-3); font-size: 0.8125rem; border-radius: var(--radius-md); }
+        .btn-lg { padding: var(--space-4) var(--space-8); font-size: 1.0625rem; border-radius: var(--radius-xl); }
+
+        /* ─── INPUTS ─── */
+        .input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: var(--surface-1);
+            border: 1.5px solid rgba(141,42,243,0.2);
+            border-radius: var(--radius-lg);
+            color: var(--purple-100);
+            font-family: var(--font-primary);
+            font-size: 0.9375rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input:focus {
+            border-color: var(--purple-600);
+            box-shadow: 0 0 0 3px rgba(141,42,243,0.15);
+        }
+        .input::placeholder { color: var(--purple-700); }
+        .input.input-error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(248,113,113,0.12);
+        }
+
+        .select {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: var(--surface-1);
+            border: 1.5px solid rgba(141,42,243,0.2);
+            border-radius: var(--radius-lg);
+            color: var(--purple-100);
+            font-family: var(--font-primary);
+            font-size: 0.9375rem;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%238D2AF3' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .select:focus {
+            border-color: var(--purple-600);
+            box-shadow: 0 0 0 3px rgba(141,42,243,0.15);
+        }
+
+        .textarea {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: var(--surface-1);
+            border: 1.5px solid rgba(141,42,243,0.2);
+            border-radius: var(--radius-lg);
+            color: var(--purple-100);
+            font-family: var(--font-primary);
+            font-size: 0.9375rem;
+            outline: none;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .textarea:focus {
+            border-color: var(--purple-600);
+            box-shadow: 0 0 0 3px rgba(141,42,243,0.15);
+        }
+        .textarea::placeholder { color: var(--purple-700); }
+
+        .checkbox-wrapper, .radio-wrapper {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--purple-200);
+        }
+        .checkbox-custom, .radio-custom {
+            width: 20px;
+            height: 20px;
+            border: 1.5px solid rgba(141,42,243,0.4);
+            background: var(--surface-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .checkbox-custom { border-radius: var(--radius-sm); }
+        .radio-custom { border-radius: 50%; }
+        .checkbox-custom.checked, .radio-custom.checked {
+            background: var(--purple-600);
+            border-color: var(--purple-600);
+            box-shadow: 0 0 8px rgba(141,42,243,0.4);
+        }
+        .checkbox-custom.checked::after { content: '✓'; color: white; font-size: 0.75rem; font-weight: 700; }
+        .radio-custom.checked::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: white; }
+
+        /* ─── BADGES ─── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            letter-spacing: 0.03em;
+        }
+        .badge-purple  { background: rgba(141,42,243,0.18); color: var(--purple-300); }
+        .badge-blue    { background: rgba(59,78,240,0.18); color: var(--blue-300); }
+        .badge-success { background: var(--success-bg); color: var(--success); }
+        .badge-warning { background: var(--warning-bg); color: var(--warning); }
+        .badge-error   { background: var(--error-bg); color: var(--error); }
+        .badge-info    { background: var(--info-bg); color: var(--info); }
+
+        /* ─── TOGGLE ─── */
+        .toggle {
+            width: 48px;
+            height: 26px;
+            background: var(--surface-2);
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(141,42,243,0.25);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s;
+        }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--purple-400);
+            top: 3px;
+            left: 3px;
+            transition: transform 0.25s, background 0.25s;
+        }
+        .toggle.active { background: var(--purple-600); box-shadow: 0 0 14px rgba(141,42,243,0.45); border-color: var(--purple-600); }
+        .toggle.active::after { transform: translateX(22px); background: white; }
+
+        /* ─── CARD ─── */
+        .card {
+            background: var(--gradient-card);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .card:hover {
+            border-color: rgba(141,42,243,0.4);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-2px);
+        }
+
+        /* ─── ALERTS ─── */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-5);
+            border-radius: var(--radius-lg);
+            border-left: 3px solid;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .alert-icon { font-size: 1.125rem; flex-shrink: 0; margin-top: 1px; }
+        .alert-success { background: var(--success-bg);  border-color: var(--success); color: var(--success); }
+        .alert-warning { background: var(--warning-bg);  border-color: var(--warning); color: var(--warning); }
+        .alert-error   { background: var(--error-bg);    border-color: var(--error);   color: var(--error);   }
+        .alert-info    { background: var(--info-bg);     border-color: var(--info);    color: var(--info);    }
+
+        /* ─── PROGRESS ─── */
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: var(--surface-2);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-brand);
+            border-radius: var(--radius-full);
+            box-shadow: 0 0 8px rgba(141,42,243,0.5);
+            transition: width 0.6s ease;
+        }
+
+        /* ─── TABS ─── */
+        .tabs {
+            display: flex;
+            gap: 0;
+            background: var(--surface-1);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            border: 1px solid var(--surface-border);
+        }
+        .tab {
+            padding: var(--space-2) var(--space-5);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--purple-400);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab.active {
+            background: var(--gradient-brand);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+        .tab:hover:not(.active) { color: var(--purple-200); background: var(--surface-3); }
+
+        /* ─── BREADCRUMBS ─── */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.875rem;
+        }
+        .breadcrumbs a { color: var(--purple-400); text-decoration: none; transition: color 0.2s; }
+        .breadcrumbs a:hover { color: var(--purple-300); }
+        .breadcrumbs .separator { color: var(--purple-700); }
+        .breadcrumbs .current { color: var(--purple-100); font-weight: 600; }
+
+        /* ─── PAGINATION ─── */
+        .pagination { display: flex; gap: var(--space-1); }
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            color: var(--purple-300);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .page-btn:hover:not(.disabled) { border-color: var(--purple-600); color: var(--purple-100); }
+        .page-btn.active { background: var(--gradient-brand); border-color: transparent; color: white; box-shadow: var(--shadow-glow); }
+        .page-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ─── TABLE ─── */
+        .table-wrapper { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--surface-border); }
+        .table { width: 100%; border-collapse: collapse; }
+        .table th {
+            padding: var(--space-3) var(--space-4);
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple-500);
+            background: var(--surface-1);
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .table td {
+            padding: var(--space-3) var(--space-4);
+            font-size: 0.9rem;
+            color: var(--purple-200);
+            border-bottom: 1px solid rgba(141,42,243,0.06);
+        }
+        .table tr:last-child td { border-bottom: none; }
+        .table tr:hover td { background: rgba(141,42,243,0.05); }
+
+        /* ─── MODAL ─── */
+        .modal-demo {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-5) var(--space-6);
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .modal-header h3 { color: var(--purple-50); font-size: 1rem; font-weight: 700; }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--purple-400);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: var(--space-1);
+        }
+        .modal-body {
+            padding: var(--space-5) var(--space-6);
+            color: var(--purple-200);
+            font-size: 0.9rem;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-6);
+            border-top: 1px solid var(--surface-border);
+            background: rgba(10,14,46,0.4);
+        }
+
+        /* ─── TOOLTIP ─── */
+        .tooltip-demo { position: relative; }
+        .tooltip-box {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--navy-800);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.8125rem;
+            color: var(--purple-200);
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+        }
+        .tooltip-box::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--surface-border);
+        }
+
+        /* ─── DROPDOWN ─── */
+        .dropdown-menu {
+            background: var(--navy-800);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            min-width: 140px;
+            box-shadow: var(--shadow-lg);
+        }
+        .dropdown-item {
+            display: block;
+            padding: var(--space-3) var(--space-4);
+            font-size: 0.875rem;
+            color: var(--purple-200);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .dropdown-item:hover { background: var(--surface-3); }
+
+        /* ─── NAVBAR ─── */
+        .navbar-demo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            background: rgba(10,14,46,0.85);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--surface-border);
+            backdrop-filter: blur(12px);
+        }
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.125rem;
+            letter-spacing: 0.15em;
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .navbar-links { display: flex; gap: var(--space-6); }
+        .navbar-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--purple-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .navbar-links a.active, .navbar-links a:hover { color: var(--purple-100); }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar-demo {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-3);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--purple-400);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sidebar-item:hover { background: var(--surface-3); color: var(--purple-200); }
+        .sidebar-item.active {
+            background: var(--gradient-purple);
+            color: var(--purple-100);
+            border: 1px solid rgba(141,42,243,0.25);
+        }
+        .sidebar-item .icon { font-size: 1rem; color: var(--purple-600); }
+
+        /* ─── SPACING ─── */
+        .spacing-demo {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-6) 0;
+        }
+        .spacing-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        .spacing-box { background: var(--gradient-brand); border-radius: 2px; }
+        .spacing-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple-400); }
+        .spacing-value { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple-600); }
+
+        /* ─── DO/DON'T ─── */
+        .dos-donts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+        @media (max-width: 640px) { .dos-donts { grid-template-columns: 1fr; } }
+
+        .do-item, .dont-item {
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
+            border-left: 3px solid;
+        }
+        .do-item {
+            background: rgba(52,211,153,0.06);
+            border-color: var(--success);
+        }
+        .dont-item {
+            background: rgba(248,113,113,0.06);
+            border-color: var(--error);
+        }
+        .do-item .label { color: var(--success); font-weight: 700; font-size: 0.8rem; display: block; margin-bottom: var(--space-2); font-family: var(--font-mono); }
+        .dont-item .label { color: var(--error); font-weight: 700; font-size: 0.8rem; display: block; margin-bottom: var(--space-2); font-family: var(--font-mono); }
+        .do-item p, .dont-item p { font-size: 0.9rem; color: var(--purple-200); line-height: 1.5; }
+
+        /* ─── DARK MODE SECTION ─── */
+        .depth-demo {
+            padding: var(--space-5);
+            background: var(--navy-900);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(141,42,243,0.1);
+            font-size: 0.875rem;
+            color: var(--purple-300);
+        }
+
+        /* ─── FOOTER ─── */
+        footer.footer {
+            background: var(--navy-950);
+            border-top: 1px solid rgba(141,42,243,0.12);
+            padding: var(--space-10) 0;
+            text-align: center;
+        }
+        footer.footer p { color: var(--purple-500); font-size: 0.875rem; }
+
+        /* ─── TRANSITIONS & ANIMATIONS ─── */
+        .fade-section {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Dots -->
+    <nav class="toc">
+        <a href="#cover"      title="Cover"></a>
+        <a href="#logo"       title="Logo"></a>
+        <a href="#colors"     title="Barvy"></a>
+        <a href="#typography" title="Typografie"></a>
+        <a href="#components" title="Komponenty"></a>
+        <a href="#forms"      title="Formuláře"></a>
+        <a href="#navigation" title="Navigace"></a>
+        <a href="#spacing"    title="Spacing"></a>
+        <a href="#darkmode"   title="Dark Mode"></a>
+        <a href="#guidelines" title="Pravidla"></a>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════════ COVER -->
+    <section class="cover" id="cover">
+        <div class="logo-hero">
+            <!-- PRAUT Logo SVG — full gradient -->
+            <svg width="320" height="68" style="max-width:100%;" viewBox="0 0 433 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M150.908 55.65H134.174V29.2777H172.612C177.743 29.2777 182.08 25.0732 181.992 19.9348C181.908 14.9425 177.824 10.9071 172.819 10.9071H139.931V17.3099H173.698C175.287 17.3099 176.577 18.6012 176.577 20.1923C176.577 21.7834 175.287 23.0748 173.698 23.0748H134.174V5.14224H172.539C180.691 5.14224 187.553 11.572 187.745 19.735C187.937 27.898 181.171 35.0464 172.819 35.0464H139.931V49.889H145.151V38.6398H150.908V55.6538V55.65Z" fill="url(#cover_g0)"/>
+<path d="M250.616 55.65H230.232L221.904 44.7583H210.486V55.65H193.752V29.2777H232.19C237.321 29.2777 241.658 25.0732 241.57 19.9348C241.486 14.9425 237.402 10.9071 232.397 10.9071H199.509V17.3099H233.184C234.773 17.3099 236.062 18.6012 236.062 20.1923C236.062 21.7834 234.773 23.0748 233.184 23.0748H193.752V5.14224H232.117C240.269 5.14224 247.131 11.572 247.323 19.735C247.523 28.144 240.749 35.0464 232.397 35.0464H199.509V49.889H204.729V38.9973H224.748L233.077 49.889H239.041L230.835 39.0357H238.054L250.616 55.6538V55.65Z" fill="url(#cover_g1)"/>
+<path d="M318.204 55.65H300.104L290.67 39.0318H297.291L303.455 49.8851H308.398L293.936 23.9433L276.224 55.65H256.703L284.721 5.27675H291.311L266.498 49.8851H272.85L293.94 12.1215L318.204 55.65Z" fill="url(#cover_g2)"/>
+<path d="M345.865 56.2418C330.931 56.2418 318.784 44.078 318.784 29.124V5.14224H335.909V28.4361C335.909 33.9895 340.419 38.5053 345.965 38.5053C351.511 38.5053 356.02 33.9895 356.02 28.4361V6.25678H361.777V28.4322C361.777 37.164 354.685 44.2663 345.965 44.2663C337.245 44.2663 330.152 37.164 330.152 28.4322V10.9071H324.541V29.1202C324.541 40.8958 334.109 50.4731 345.865 50.4731C357.621 50.4731 367.189 40.892 367.189 29.1202V6.25678H372.946V29.1202C372.946 44.0742 360.799 56.238 345.865 56.238V56.2418Z" fill="url(#cover_g3)"/>
+<path d="M415.065 55.65H397.943V23.0748H380.891V6.17223H433V23.0748H421.006V17.3099H427.243V11.9371H386.648V17.3099H403.7V49.8851H409.308V18.3284H415.065V55.65Z" fill="url(#cover_g4)"/>
+<path d="M100.745 13.924L61.7387 0L33.8093 2.16758L13.5253 13.4129L7.5571 19.3891L2.40645 27.3254L0 36.1609V43.3708L15.7513 62.3795L36.4499 62.0105L53.3372 78.7247L58.3382 74.551L58.2768 76.7647L76.968 91.0077H87.2924L80.8829 77.6371L78.1233 74.4472L87.4613 69.6316L98.3306 60.3041L107.127 44.6852L100.745 13.9317V13.924ZM35.3944 7.45587L61.0133 5.46892L96.0892 17.9902L97.421 24.416H77.4286L70.8272 31.6221H49.6988L45.8454 25.177L50.689 19.5697H63.6731C64.529 20.9917 66.0795 21.9448 67.8565 21.9448C70.5547 21.9448 72.7424 19.7542 72.7424 17.0524C72.7424 14.3506 70.5547 12.16 67.8565 12.16C66.2331 12.16 64.7976 12.9555 63.911 14.1777H48.2288L42.9362 20.3038L41.0824 17.2061H17.8085L35.3982 7.45587H35.3944ZM94.1011 56.8183L84.433 65.1197L69.5645 72.7908L76.3386 80.6194L78.699 85.5465L63.7345 74.1436L64.0415 62.7676L53.6404 71.4456L38.6184 56.5762L18.2384 56.9413L17.298 55.8037L18.9446 50.7883H19.3437C20.2226 52.0758 21.7003 52.9213 23.3775 52.9213C26.0756 52.9213 28.2633 50.7306 28.2633 48.0288C28.2633 45.3271 26.0756 43.1364 23.3775 43.1364C21.6504 43.1364 20.1344 44.0357 19.267 45.3924H15.0451L13.2374 50.8997L5.38477 41.4223V37.0141H31.6984L39.9502 49.3163H42.4602L48.7853 59.6623H53.5368C54.4119 60.9844 55.9087 61.8568 57.6128 61.8568C60.311 61.8568 62.4986 59.6661 62.4986 56.9644C62.4986 54.2626 60.311 52.0719 57.6128 52.0719C55.9087 52.0719 54.4119 52.9443 53.5368 54.2664H51.802L48.7738 49.3163H67.9448L72.1628 56.1112H94.5002L94.1011 56.8183ZM97.5399 50.7153H75.1565L70.9385 43.9204H42.821L34.5692 31.6183H6.8202L7.38055 29.5544L11.7636 22.8019L11.967 22.5982H38.0235L46.6437 37.0141H73.1953L79.7967 29.8081H98.5417L100.177 37.6829H87.5342C86.6438 36.4915 85.2275 35.719 83.6271 35.719C80.9289 35.719 78.7412 37.9096 78.7412 40.6114C78.7412 43.3132 80.9289 45.5038 83.6271 45.5038C85.4271 45.5038 86.993 44.5277 87.8412 43.0788H101.294L101.443 43.7936L97.5399 50.7191V50.7153Z" fill="url(#cover_g5)"/>
+<path d="M134.784 90.7771L139.536 77.8638H140.864L145.615 90.7771H144.253L140.2 79.5625L136.147 90.7771H134.784ZM136.957 87.2913L137.344 86.2229H143.036L143.424 87.2913H136.957Z" fill="url(#cover_g6)"/>
+<path d="M171.902 91C171.031 91 170.24 90.8271 169.534 90.485C168.828 90.1391 168.267 89.6011 167.849 88.8708C167.431 88.1406 167.223 87.2067 167.223 86.0768V77.8677H168.513V86.096C168.513 86.9685 168.659 87.6871 168.947 88.2444C169.235 88.8055 169.638 89.2129 170.152 89.4704C170.666 89.7279 171.257 89.8586 171.921 89.8586C172.585 89.8586 173.188 89.7279 173.69 89.4704C174.193 89.2129 174.589 88.8017 174.869 88.2444C175.153 87.6833 175.291 86.9685 175.291 86.096V77.8677H176.581V86.0768C176.581 87.2067 176.373 88.1406 175.955 88.8708C175.537 89.6011 174.976 90.1391 174.27 90.485C173.564 90.8309 172.773 91 171.902 91Z" fill="url(#cover_g7)"/>
+<path d="M202.576 90.7771V78.9323H198.707V77.8638H207.734V78.9323H203.865V90.7771H202.576Z" fill="url(#cover_g8)"/>
+<path d="M234.946 91C233.717 91 232.635 90.7194 231.702 90.1622C230.77 89.6011 230.041 88.8209 229.519 87.8178C228.997 86.8147 228.736 85.6502 228.736 84.3205C228.736 82.9907 228.997 81.8454 229.519 80.8423C230.041 79.8393 230.77 79.0552 231.702 78.4903C232.635 77.9253 233.717 77.6409 234.946 77.6409C236.174 77.6409 237.31 77.9253 238.242 78.4903C239.175 79.0552 239.901 79.8393 240.415 80.8423C240.929 81.8454 241.19 83.0022 241.19 84.3205C241.19 85.6387 240.933 86.8147 240.415 87.8178C239.901 88.8209 239.175 89.6011 238.242 90.1622C237.31 90.7233 236.208 91 234.946 91ZM234.965 89.8739C235.936 89.8739 236.788 89.651 237.525 89.2091C238.262 88.7671 238.837 88.1291 239.248 87.299C239.659 86.4688 239.866 85.4773 239.866 84.3205C239.866 83.1637 239.659 82.1759 239.248 81.3496C238.837 80.5272 238.262 79.8931 237.525 79.4511C236.788 79.0091 235.936 78.7862 234.965 78.7862C233.994 78.7862 233.142 79.0091 232.405 79.4511C231.668 79.8931 231.092 80.5272 230.682 81.3496C230.271 82.1721 230.064 83.1637 230.064 84.3205C230.064 85.4773 230.271 86.4688 230.682 87.299C231.092 88.1291 231.668 88.7671 232.405 89.2091C233.142 89.651 233.994 89.8739 234.965 89.8739Z" fill="url(#cover_g9)"/>
+<path d="M263.796 90.7771V77.8638H265.27L270.021 87.1798L274.758 77.8638H276.251V90.7771H274.961V80.2236L270.501 88.9669H269.542L265.082 80.2582V90.7733H263.792L263.796 90.7771Z" fill="url(#cover_g10)"/>
+<path d="M298.557 90.7771L303.309 77.8638H304.637L309.388 90.7771H308.026L303.973 79.5625L299.92 90.7771H298.557ZM300.733 87.2913L301.121 86.2229H306.813L307.201 87.2913H300.733Z" fill="url(#cover_g11)"/>
+<path d="M333.23 90.7771V78.9323H329.361V77.8638H338.388V78.9323H334.52V90.7771H333.23Z" fill="url(#cover_g12)"/>
+<path d="M360.661 90.7771V77.8638H361.95V90.7771H360.661Z" fill="url(#cover_g13)"/>
+<path d="M390.762 91C389.534 91 388.452 90.7194 387.519 90.1622C386.587 89.6011 385.857 88.8209 385.335 87.8178C384.813 86.8147 384.552 85.6502 384.552 84.3205C384.552 82.9907 384.813 81.8454 385.335 80.8423C385.857 79.8393 386.587 79.0552 387.519 78.4903C388.452 77.9253 389.534 77.6409 390.762 77.6409C391.991 77.6409 393.127 77.9253 394.059 78.4903C394.992 79.0552 395.717 79.8393 396.232 80.8423C396.746 81.8454 397.007 83.0022 397.007 84.3205C397.007 85.6387 396.75 86.8147 396.232 87.8178C395.717 88.8209 394.992 89.6011 394.059 90.1622C393.127 90.7233 392.025 91 390.762 91ZM390.782 89.8739C391.753 89.8739 392.605 89.651 393.342 89.2091C394.078 88.7671 394.654 88.1291 395.065 87.299C395.475 86.4688 395.683 85.4773 395.683 84.3205C395.683 83.1637 395.475 82.1759 395.065 81.3496C394.654 80.5272 394.078 79.8931 393.342 79.4511C392.605 79.0091 391.753 78.7862 390.782 78.7862C389.811 78.7862 388.958 79.0091 388.222 79.4511C387.485 79.8931 386.909 80.5272 386.498 81.3496C386.088 82.1721 385.88 83.1637 385.88 84.3205C385.88 85.4773 386.088 86.4688 386.498 87.299C386.909 88.1291 387.485 88.7671 388.222 89.2091C388.958 89.651 389.811 89.8739 390.782 89.8739Z" fill="url(#cover_g14)"/>
+<path d="M419.613 90.7771V77.8638H420.902L428.034 88.6172V77.8638H429.323V90.7771H428.034L420.902 80.0045V90.7771H419.613Z" fill="url(#cover_g15)"/>
+<defs>
+<linearGradient id="cover_g0" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g1" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g2" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g3" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g4" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g5" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g6" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g7" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g8" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g9" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g10" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g11" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g12" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g13" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g14" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="cover_g15" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+</defs>
+</svg>
+        </div>
+        <p class="subtitle">Visual Book & UI Design System</p>
+        <p class="version">v2.0 — 2025 | Sjednocená identita · Dark Navy Edition</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 01 — LOGO -->
+    <section id="logo" class="fade-section">
+        <div class="container">
+            <span class="section-label">01 — Logo</span>
+            <h2 class="section-title">Značka Praut</h2>
+            <p class="section-desc">Logo Praut kombinuje mozkový motiv s technologickými prvky. Gradientový přechod modro → fialový odráží sjednocení obou barev identity.</p>
+
+            <div class="logo-display">
+                <!-- Dark variant -->
+                <div class="logo-card dark">
+                    <svg width="260" height="55" style="max-width:100%;" viewBox="0 0 433 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M150.908 55.65H134.174V29.2777H172.612C177.743 29.2777 182.08 25.0732 181.992 19.9348C181.908 14.9425 177.824 10.9071 172.819 10.9071H139.931V17.3099H173.698C175.287 17.3099 176.577 18.6012 176.577 20.1923C176.577 21.7834 175.287 23.0748 173.698 23.0748H134.174V5.14224H172.539C180.691 5.14224 187.553 11.572 187.745 19.735C187.937 27.898 181.171 35.0464 172.819 35.0464H139.931V49.889H145.151V38.6398H150.908V55.6538V55.65Z" fill="url(#dark_g0)"/>
+<path d="M250.616 55.65H230.232L221.904 44.7583H210.486V55.65H193.752V29.2777H232.19C237.321 29.2777 241.658 25.0732 241.57 19.9348C241.486 14.9425 237.402 10.9071 232.397 10.9071H199.509V17.3099H233.184C234.773 17.3099 236.062 18.6012 236.062 20.1923C236.062 21.7834 234.773 23.0748 233.184 23.0748H193.752V5.14224H232.117C240.269 5.14224 247.131 11.572 247.323 19.735C247.523 28.144 240.749 35.0464 232.397 35.0464H199.509V49.889H204.729V38.9973H224.748L233.077 49.889H239.041L230.835 39.0357H238.054L250.616 55.6538V55.65Z" fill="url(#dark_g1)"/>
+<path d="M318.204 55.65H300.104L290.67 39.0318H297.291L303.455 49.8851H308.398L293.936 23.9433L276.224 55.65H256.703L284.721 5.27675H291.311L266.498 49.8851H272.85L293.94 12.1215L318.204 55.65Z" fill="url(#dark_g2)"/>
+<path d="M345.865 56.2418C330.931 56.2418 318.784 44.078 318.784 29.124V5.14224H335.909V28.4361C335.909 33.9895 340.419 38.5053 345.965 38.5053C351.511 38.5053 356.02 33.9895 356.02 28.4361V6.25678H361.777V28.4322C361.777 37.164 354.685 44.2663 345.965 44.2663C337.245 44.2663 330.152 37.164 330.152 28.4322V10.9071H324.541V29.1202C324.541 40.8958 334.109 50.4731 345.865 50.4731C357.621 50.4731 367.189 40.892 367.189 29.1202V6.25678H372.946V29.1202C372.946 44.0742 360.799 56.238 345.865 56.238V56.2418Z" fill="url(#dark_g3)"/>
+<path d="M415.065 55.65H397.943V23.0748H380.891V6.17223H433V23.0748H421.006V17.3099H427.243V11.9371H386.648V17.3099H403.7V49.8851H409.308V18.3284H415.065V55.65Z" fill="url(#dark_g4)"/>
+<path d="M100.745 13.924L61.7387 0L33.8093 2.16758L13.5253 13.4129L7.5571 19.3891L2.40645 27.3254L0 36.1609V43.3708L15.7513 62.3795L36.4499 62.0105L53.3372 78.7247L58.3382 74.551L58.2768 76.7647L76.968 91.0077H87.2924L80.8829 77.6371L78.1233 74.4472L87.4613 69.6316L98.3306 60.3041L107.127 44.6852L100.745 13.9317V13.924ZM35.3944 7.45587L61.0133 5.46892L96.0892 17.9902L97.421 24.416H77.4286L70.8272 31.6221H49.6988L45.8454 25.177L50.689 19.5697H63.6731C64.529 20.9917 66.0795 21.9448 67.8565 21.9448C70.5547 21.9448 72.7424 19.7542 72.7424 17.0524C72.7424 14.3506 70.5547 12.16 67.8565 12.16C66.2331 12.16 64.7976 12.9555 63.911 14.1777H48.2288L42.9362 20.3038L41.0824 17.2061H17.8085L35.3982 7.45587H35.3944ZM94.1011 56.8183L84.433 65.1197L69.5645 72.7908L76.3386 80.6194L78.699 85.5465L63.7345 74.1436L64.0415 62.7676L53.6404 71.4456L38.6184 56.5762L18.2384 56.9413L17.298 55.8037L18.9446 50.7883H19.3437C20.2226 52.0758 21.7003 52.9213 23.3775 52.9213C26.0756 52.9213 28.2633 50.7306 28.2633 48.0288C28.2633 45.3271 26.0756 43.1364 23.3775 43.1364C21.6504 43.1364 20.1344 44.0357 19.267 45.3924H15.0451L13.2374 50.8997L5.38477 41.4223V37.0141H31.6984L39.9502 49.3163H42.4602L48.7853 59.6623H53.5368C54.4119 60.9844 55.9087 61.8568 57.6128 61.8568C60.311 61.8568 62.4986 59.6661 62.4986 56.9644C62.4986 54.2626 60.311 52.0719 57.6128 52.0719C55.9087 52.0719 54.4119 52.9443 53.5368 54.2664H51.802L48.7738 49.3163H67.9448L72.1628 56.1112H94.5002L94.1011 56.8183ZM97.5399 50.7153H75.1565L70.9385 43.9204H42.821L34.5692 31.6183H6.8202L7.38055 29.5544L11.7636 22.8019L11.967 22.5982H38.0235L46.6437 37.0141H73.1953L79.7967 29.8081H98.5417L100.177 37.6829H87.5342C86.6438 36.4915 85.2275 35.719 83.6271 35.719C80.9289 35.719 78.7412 37.9096 78.7412 40.6114C78.7412 43.3132 80.9289 45.5038 83.6271 45.5038C85.4271 45.5038 86.993 44.5277 87.8412 43.0788H101.294L101.443 43.7936L97.5399 50.7191V50.7153Z" fill="url(#dark_g5)"/>
+<path d="M134.784 90.7771L139.536 77.8638H140.864L145.615 90.7771H144.253L140.2 79.5625L136.147 90.7771H134.784ZM136.957 87.2913L137.344 86.2229H143.036L143.424 87.2913H136.957Z" fill="url(#dark_g6)"/>
+<path d="M171.902 91C171.031 91 170.24 90.8271 169.534 90.485C168.828 90.1391 168.267 89.6011 167.849 88.8708C167.431 88.1406 167.223 87.2067 167.223 86.0768V77.8677H168.513V86.096C168.513 86.9685 168.659 87.6871 168.947 88.2444C169.235 88.8055 169.638 89.2129 170.152 89.4704C170.666 89.7279 171.257 89.8586 171.921 89.8586C172.585 89.8586 173.188 89.7279 173.69 89.4704C174.193 89.2129 174.589 88.8017 174.869 88.2444C175.153 87.6833 175.291 86.9685 175.291 86.096V77.8677H176.581V86.0768C176.581 87.2067 176.373 88.1406 175.955 88.8708C175.537 89.6011 174.976 90.1391 174.27 90.485C173.564 90.8309 172.773 91 171.902 91Z" fill="url(#dark_g7)"/>
+<path d="M202.576 90.7771V78.9323H198.707V77.8638H207.734V78.9323H203.865V90.7771H202.576Z" fill="url(#dark_g8)"/>
+<path d="M234.946 91C233.717 91 232.635 90.7194 231.702 90.1622C230.77 89.6011 230.041 88.8209 229.519 87.8178C228.997 86.8147 228.736 85.6502 228.736 84.3205C228.736 82.9907 228.997 81.8454 229.519 80.8423C230.041 79.8393 230.77 79.0552 231.702 78.4903C232.635 77.9253 233.717 77.6409 234.946 77.6409C236.174 77.6409 237.31 77.9253 238.242 78.4903C239.175 79.0552 239.901 79.8393 240.415 80.8423C240.929 81.8454 241.19 83.0022 241.19 84.3205C241.19 85.6387 240.933 86.8147 240.415 87.8178C239.901 88.8209 239.175 89.6011 238.242 90.1622C237.31 90.7233 236.208 91 234.946 91ZM234.965 89.8739C235.936 89.8739 236.788 89.651 237.525 89.2091C238.262 88.7671 238.837 88.1291 239.248 87.299C239.659 86.4688 239.866 85.4773 239.866 84.3205C239.866 83.1637 239.659 82.1759 239.248 81.3496C238.837 80.5272 238.262 79.8931 237.525 79.4511C236.788 79.0091 235.936 78.7862 234.965 78.7862C233.994 78.7862 233.142 79.0091 232.405 79.4511C231.668 79.8931 231.092 80.5272 230.682 81.3496C230.271 82.1721 230.064 83.1637 230.064 84.3205C230.064 85.4773 230.271 86.4688 230.682 87.299C231.092 88.1291 231.668 88.7671 232.405 89.2091C233.142 89.651 233.994 89.8739 234.965 89.8739Z" fill="url(#dark_g9)"/>
+<path d="M263.796 90.7771V77.8638H265.27L270.021 87.1798L274.758 77.8638H276.251V90.7771H274.961V80.2236L270.501 88.9669H269.542L265.082 80.2582V90.7733H263.792L263.796 90.7771Z" fill="url(#dark_g10)"/>
+<path d="M298.557 90.7771L303.309 77.8638H304.637L309.388 90.7771H308.026L303.973 79.5625L299.92 90.7771H298.557ZM300.733 87.2913L301.121 86.2229H306.813L307.201 87.2913H300.733Z" fill="url(#dark_g11)"/>
+<path d="M333.23 90.7771V78.9323H329.361V77.8638H338.388V78.9323H334.52V90.7771H333.23Z" fill="url(#dark_g12)"/>
+<path d="M360.661 90.7771V77.8638H361.95V90.7771H360.661Z" fill="url(#dark_g13)"/>
+<path d="M390.762 91C389.534 91 388.452 90.7194 387.519 90.1622C386.587 89.6011 385.857 88.8209 385.335 87.8178C384.813 86.8147 384.552 85.6502 384.552 84.3205C384.552 82.9907 384.813 81.8454 385.335 80.8423C385.857 79.8393 386.587 79.0552 387.519 78.4903C388.452 77.9253 389.534 77.6409 390.762 77.6409C391.991 77.6409 393.127 77.9253 394.059 78.4903C394.992 79.0552 395.717 79.8393 396.232 80.8423C396.746 81.8454 397.007 83.0022 397.007 84.3205C397.007 85.6387 396.75 86.8147 396.232 87.8178C395.717 88.8209 394.992 89.6011 394.059 90.1622C393.127 90.7233 392.025 91 390.762 91ZM390.782 89.8739C391.753 89.8739 392.605 89.651 393.342 89.2091C394.078 88.7671 394.654 88.1291 395.065 87.299C395.475 86.4688 395.683 85.4773 395.683 84.3205C395.683 83.1637 395.475 82.1759 395.065 81.3496C394.654 80.5272 394.078 79.8931 393.342 79.4511C392.605 79.0091 391.753 78.7862 390.782 78.7862C389.811 78.7862 388.958 79.0091 388.222 79.4511C387.485 79.8931 386.909 80.5272 386.498 81.3496C386.088 82.1721 385.88 83.1637 385.88 84.3205C385.88 85.4773 386.088 86.4688 386.498 87.299C386.909 88.1291 387.485 88.7671 388.222 89.2091C388.958 89.651 389.811 89.8739 390.782 89.8739Z" fill="url(#dark_g14)"/>
+<path d="M419.613 90.7771V77.8638H420.902L428.034 88.6172V77.8638H429.323V90.7771H428.034L420.902 80.0045V90.7771H419.613Z" fill="url(#dark_g15)"/>
+<defs>
+<linearGradient id="dark_g0" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g1" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g2" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g3" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g4" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g5" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g6" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g7" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g8" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g9" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g10" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g11" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g12" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g13" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g14" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="dark_g15" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+</defs>
+</svg>
+                    <span class="label">Na tmavém pozadí (primární)</span>
+                </div>
+
+                <!-- Light variant -->
+                <div class="logo-card light">
+                    <svg width="260" height="55" style="max-width:100%;" viewBox="0 0 433 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M150.908 55.65H134.174V29.2777H172.612C177.743 29.2777 182.08 25.0732 181.992 19.9348C181.908 14.9425 177.824 10.9071 172.819 10.9071H139.931V17.3099H173.698C175.287 17.3099 176.577 18.6012 176.577 20.1923C176.577 21.7834 175.287 23.0748 173.698 23.0748H134.174V5.14224H172.539C180.691 5.14224 187.553 11.572 187.745 19.735C187.937 27.898 181.171 35.0464 172.819 35.0464H139.931V49.889H145.151V38.6398H150.908V55.6538V55.65Z" fill="url(#light_g0)"/>
+<path d="M250.616 55.65H230.232L221.904 44.7583H210.486V55.65H193.752V29.2777H232.19C237.321 29.2777 241.658 25.0732 241.57 19.9348C241.486 14.9425 237.402 10.9071 232.397 10.9071H199.509V17.3099H233.184C234.773 17.3099 236.062 18.6012 236.062 20.1923C236.062 21.7834 234.773 23.0748 233.184 23.0748H193.752V5.14224H232.117C240.269 5.14224 247.131 11.572 247.323 19.735C247.523 28.144 240.749 35.0464 232.397 35.0464H199.509V49.889H204.729V38.9973H224.748L233.077 49.889H239.041L230.835 39.0357H238.054L250.616 55.6538V55.65Z" fill="url(#light_g1)"/>
+<path d="M318.204 55.65H300.104L290.67 39.0318H297.291L303.455 49.8851H308.398L293.936 23.9433L276.224 55.65H256.703L284.721 5.27675H291.311L266.498 49.8851H272.85L293.94 12.1215L318.204 55.65Z" fill="url(#light_g2)"/>
+<path d="M345.865 56.2418C330.931 56.2418 318.784 44.078 318.784 29.124V5.14224H335.909V28.4361C335.909 33.9895 340.419 38.5053 345.965 38.5053C351.511 38.5053 356.02 33.9895 356.02 28.4361V6.25678H361.777V28.4322C361.777 37.164 354.685 44.2663 345.965 44.2663C337.245 44.2663 330.152 37.164 330.152 28.4322V10.9071H324.541V29.1202C324.541 40.8958 334.109 50.4731 345.865 50.4731C357.621 50.4731 367.189 40.892 367.189 29.1202V6.25678H372.946V29.1202C372.946 44.0742 360.799 56.238 345.865 56.238V56.2418Z" fill="url(#light_g3)"/>
+<path d="M415.065 55.65H397.943V23.0748H380.891V6.17223H433V23.0748H421.006V17.3099H427.243V11.9371H386.648V17.3099H403.7V49.8851H409.308V18.3284H415.065V55.65Z" fill="url(#light_g4)"/>
+<path d="M100.745 13.924L61.7387 0L33.8093 2.16758L13.5253 13.4129L7.5571 19.3891L2.40645 27.3254L0 36.1609V43.3708L15.7513 62.3795L36.4499 62.0105L53.3372 78.7247L58.3382 74.551L58.2768 76.7647L76.968 91.0077H87.2924L80.8829 77.6371L78.1233 74.4472L87.4613 69.6316L98.3306 60.3041L107.127 44.6852L100.745 13.9317V13.924ZM35.3944 7.45587L61.0133 5.46892L96.0892 17.9902L97.421 24.416H77.4286L70.8272 31.6221H49.6988L45.8454 25.177L50.689 19.5697H63.6731C64.529 20.9917 66.0795 21.9448 67.8565 21.9448C70.5547 21.9448 72.7424 19.7542 72.7424 17.0524C72.7424 14.3506 70.5547 12.16 67.8565 12.16C66.2331 12.16 64.7976 12.9555 63.911 14.1777H48.2288L42.9362 20.3038L41.0824 17.2061H17.8085L35.3982 7.45587H35.3944ZM94.1011 56.8183L84.433 65.1197L69.5645 72.7908L76.3386 80.6194L78.699 85.5465L63.7345 74.1436L64.0415 62.7676L53.6404 71.4456L38.6184 56.5762L18.2384 56.9413L17.298 55.8037L18.9446 50.7883H19.3437C20.2226 52.0758 21.7003 52.9213 23.3775 52.9213C26.0756 52.9213 28.2633 50.7306 28.2633 48.0288C28.2633 45.3271 26.0756 43.1364 23.3775 43.1364C21.6504 43.1364 20.1344 44.0357 19.267 45.3924H15.0451L13.2374 50.8997L5.38477 41.4223V37.0141H31.6984L39.9502 49.3163H42.4602L48.7853 59.6623H53.5368C54.4119 60.9844 55.9087 61.8568 57.6128 61.8568C60.311 61.8568 62.4986 59.6661 62.4986 56.9644C62.4986 54.2626 60.311 52.0719 57.6128 52.0719C55.9087 52.0719 54.4119 52.9443 53.5368 54.2664H51.802L48.7738 49.3163H67.9448L72.1628 56.1112H94.5002L94.1011 56.8183ZM97.5399 50.7153H75.1565L70.9385 43.9204H42.821L34.5692 31.6183H6.8202L7.38055 29.5544L11.7636 22.8019L11.967 22.5982H38.0235L46.6437 37.0141H73.1953L79.7967 29.8081H98.5417L100.177 37.6829H87.5342C86.6438 36.4915 85.2275 35.719 83.6271 35.719C80.9289 35.719 78.7412 37.9096 78.7412 40.6114C78.7412 43.3132 80.9289 45.5038 83.6271 45.5038C85.4271 45.5038 86.993 44.5277 87.8412 43.0788H101.294L101.443 43.7936L97.5399 50.7191V50.7153Z" fill="url(#light_g5)"/>
+<path d="M134.784 90.7771L139.536 77.8638H140.864L145.615 90.7771H144.253L140.2 79.5625L136.147 90.7771H134.784ZM136.957 87.2913L137.344 86.2229H143.036L143.424 87.2913H136.957Z" fill="url(#light_g6)"/>
+<path d="M171.902 91C171.031 91 170.24 90.8271 169.534 90.485C168.828 90.1391 168.267 89.6011 167.849 88.8708C167.431 88.1406 167.223 87.2067 167.223 86.0768V77.8677H168.513V86.096C168.513 86.9685 168.659 87.6871 168.947 88.2444C169.235 88.8055 169.638 89.2129 170.152 89.4704C170.666 89.7279 171.257 89.8586 171.921 89.8586C172.585 89.8586 173.188 89.7279 173.69 89.4704C174.193 89.2129 174.589 88.8017 174.869 88.2444C175.153 87.6833 175.291 86.9685 175.291 86.096V77.8677H176.581V86.0768C176.581 87.2067 176.373 88.1406 175.955 88.8708C175.537 89.6011 174.976 90.1391 174.27 90.485C173.564 90.8309 172.773 91 171.902 91Z" fill="url(#light_g7)"/>
+<path d="M202.576 90.7771V78.9323H198.707V77.8638H207.734V78.9323H203.865V90.7771H202.576Z" fill="url(#light_g8)"/>
+<path d="M234.946 91C233.717 91 232.635 90.7194 231.702 90.1622C230.77 89.6011 230.041 88.8209 229.519 87.8178C228.997 86.8147 228.736 85.6502 228.736 84.3205C228.736 82.9907 228.997 81.8454 229.519 80.8423C230.041 79.8393 230.77 79.0552 231.702 78.4903C232.635 77.9253 233.717 77.6409 234.946 77.6409C236.174 77.6409 237.31 77.9253 238.242 78.4903C239.175 79.0552 239.901 79.8393 240.415 80.8423C240.929 81.8454 241.19 83.0022 241.19 84.3205C241.19 85.6387 240.933 86.8147 240.415 87.8178C239.901 88.8209 239.175 89.6011 238.242 90.1622C237.31 90.7233 236.208 91 234.946 91ZM234.965 89.8739C235.936 89.8739 236.788 89.651 237.525 89.2091C238.262 88.7671 238.837 88.1291 239.248 87.299C239.659 86.4688 239.866 85.4773 239.866 84.3205C239.866 83.1637 239.659 82.1759 239.248 81.3496C238.837 80.5272 238.262 79.8931 237.525 79.4511C236.788 79.0091 235.936 78.7862 234.965 78.7862C233.994 78.7862 233.142 79.0091 232.405 79.4511C231.668 79.8931 231.092 80.5272 230.682 81.3496C230.271 82.1721 230.064 83.1637 230.064 84.3205C230.064 85.4773 230.271 86.4688 230.682 87.299C231.092 88.1291 231.668 88.7671 232.405 89.2091C233.142 89.651 233.994 89.8739 234.965 89.8739Z" fill="url(#light_g9)"/>
+<path d="M263.796 90.7771V77.8638H265.27L270.021 87.1798L274.758 77.8638H276.251V90.7771H274.961V80.2236L270.501 88.9669H269.542L265.082 80.2582V90.7733H263.792L263.796 90.7771Z" fill="url(#light_g10)"/>
+<path d="M298.557 90.7771L303.309 77.8638H304.637L309.388 90.7771H308.026L303.973 79.5625L299.92 90.7771H298.557ZM300.733 87.2913L301.121 86.2229H306.813L307.201 87.2913H300.733Z" fill="url(#light_g11)"/>
+<path d="M333.23 90.7771V78.9323H329.361V77.8638H338.388V78.9323H334.52V90.7771H333.23Z" fill="url(#light_g12)"/>
+<path d="M360.661 90.7771V77.8638H361.95V90.7771H360.661Z" fill="url(#light_g13)"/>
+<path d="M390.762 91C389.534 91 388.452 90.7194 387.519 90.1622C386.587 89.6011 385.857 88.8209 385.335 87.8178C384.813 86.8147 384.552 85.6502 384.552 84.3205C384.552 82.9907 384.813 81.8454 385.335 80.8423C385.857 79.8393 386.587 79.0552 387.519 78.4903C388.452 77.9253 389.534 77.6409 390.762 77.6409C391.991 77.6409 393.127 77.9253 394.059 78.4903C394.992 79.0552 395.717 79.8393 396.232 80.8423C396.746 81.8454 397.007 83.0022 397.007 84.3205C397.007 85.6387 396.75 86.8147 396.232 87.8178C395.717 88.8209 394.992 89.6011 394.059 90.1622C393.127 90.7233 392.025 91 390.762 91ZM390.782 89.8739C391.753 89.8739 392.605 89.651 393.342 89.2091C394.078 88.7671 394.654 88.1291 395.065 87.299C395.475 86.4688 395.683 85.4773 395.683 84.3205C395.683 83.1637 395.475 82.1759 395.065 81.3496C394.654 80.5272 394.078 79.8931 393.342 79.4511C392.605 79.0091 391.753 78.7862 390.782 78.7862C389.811 78.7862 388.958 79.0091 388.222 79.4511C387.485 79.8931 386.909 80.5272 386.498 81.3496C386.088 82.1721 385.88 83.1637 385.88 84.3205C385.88 85.4773 386.088 86.4688 386.498 87.299C386.909 88.1291 387.485 88.7671 388.222 89.2091C388.958 89.651 389.811 89.8739 390.782 89.8739Z" fill="url(#light_g14)"/>
+<path d="M419.613 90.7771V77.8638H420.902L428.034 88.6172V77.8638H429.323V90.7771H428.034L420.902 80.0045V90.7771H419.613Z" fill="url(#light_g15)"/>
+<defs>
+<linearGradient id="light_g0" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g1" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g2" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g3" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g4" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g5" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g6" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g7" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g8" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g9" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g10" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g11" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g12" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g13" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g14" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+<linearGradient id="light_g15" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#3B4EF0"/><stop offset="1" stop-color="#55178C"/></linearGradient>
+</defs>
+</svg>
+                    <span class="label" style="color:#141a52;">Na světlém pozadí</span>
+                </div>
+            </div>
+
+            <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Textová varianta</h3>
+            <div class="logo-variations">
+                <div class="logo-variation">
+                    <span class="logo-text-display gradient">PRAUT</span>
+                    <span class="name">Gradient</span>
+                </div>
+                <div class="logo-variation">
+                    <span class="logo-text-display" style="color:var(--purple-50);">PRAUT</span>
+                    <span class="name">Bílá</span>
+                </div>
+                <div class="logo-variation">
+                    <span class="logo-text-display" style="background:linear-gradient(135deg,#9FBFFF,#D6B0FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">PRAUT</span>
+                    <span class="name">Light Duo</span>
+                </div>
+                <div class="logo-variation" style="background:#f0f0ff;">
+                    <span class="logo-text-display dark-text" style="background:linear-gradient(135deg,#3B4EF0,#55178C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">PRAUT</span>
+                    <span class="name" style="color:var(--navy-700);">Na světlém</span>
+                </div>
+            </div>
+
+            <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Ochranná zóna</h3>
+            <p style="color:var(--purple-300);margin-bottom:var(--space-4);">Minimální volný prostor kolem loga odpovídá výšce písmene „P".</p>
+            <div class="clear-space-demo">
+                <span class="logo-text-display gradient">PRAUT</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 02 — BARVY -->
+    <section id="colors" class="fade-section">
+        <div class="container">
+            <span class="section-label">02 — Barvy</span>
+            <h2 class="section-title">Barevný systém</h2>
+            <p class="section-desc">Tmavě modrá je základní plocha webu a platformy. Fialová je signální akcent — CTA, aktivní prvky, glow efekty. Modrá doplňuje jako sekundární akcent.</p>
+
+            <div class="color-palette">
+                <!-- Gradienty -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Brand Gradienty</h3>
+                    <p class="color-group-desc">Pro CTA tlačítka, logo, zvýraznění a speciální prvky</p>
+                    <div class="gradient-swatches">
+                        <div class="gradient-swatch" style="background:linear-gradient(135deg,#8D2AF3 0%,#3B4EF0 100%);">
+                            <span class="name">Brand Primary</span>
+                            <span class="value">135° · #8D2AF3 → #3B4EF0</span>
+                        </div>
+                        <div class="gradient-swatch" style="background:linear-gradient(135deg,#BC7EFF 0%,#8D2AF3 45%,#3B4EF0 100%);">
+                            <span class="name">Brand Wide</span>
+                            <span class="value">135° · #BC7EFF → #8D2AF3 → #3B4EF0</span>
+                        </div>
+                        <div class="gradient-swatch" style="background:linear-gradient(145deg,#0a0e2e 0%,#141a52 100%);">
+                            <span class="name">Dark Gradient</span>
+                            <span class="value">145° · #0a0e2e → #141a52</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 60-30-10 -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Pravidlo 60-30-10</h3>
+                    <p class="color-group-desc">Striktní poměr pro vizuální rovnováhu na každém výstupu</p>
+                    <div class="rule-bar">
+                        <div class="r60">60% Navy pozadí</div>
+                        <div class="r30">30% Světlý text</div>
+                        <div class="r10">10%</div>
+                    </div>
+                    <p style="color:var(--purple-400);font-family:var(--font-mono);font-size:0.75rem;">
+                        60%: #0a0e2e, #0f1440&ensp;|&ensp;30%: #FAF5FF, #E4CFFF&ensp;|&ensp;10%: #8D2AF3, #3B4EF0
+                    </p>
+                </div>
+
+                <!-- Navy (primární pozadí) -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Navy — Primární pozadí</h3>
+                    <p class="color-group-desc">Základní plocha webu a aplikace. Tmavší = hlubší vrstva.</p>
+                    <div class="color-swatches">
+                        <div class="color-swatch" style="background:#e8eaff;"><div class="info"><span class="shade" style="color:#0a0e2e;">50</span><span class="hex" style="color:#0a0e2e;">#E8EA</span></div></div>
+                        <div class="color-swatch" style="background:#c5caf5;"><div class="info"><span class="shade" style="color:#0a0e2e;">100</span><span class="hex" style="color:#0a0e2e;">#C5CA</span></div></div>
+                        <div class="color-swatch" style="background:#8899e8;"><div class="info"><span class="shade">200</span><span class="hex">#8899</span></div></div>
+                        <div class="color-swatch" style="background:#4d66d6;"><div class="info"><span class="shade">300</span><span class="hex">#4D66</span></div></div>
+                        <div class="color-swatch" style="background:#222c85;"><div class="info"><span class="shade">500</span><span class="hex">#222C</span></div></div>
+                        <div class="color-swatch" style="background:#141a52;"><div class="info"><span class="shade">700</span><span class="hex">#141A</span></div></div>
+                        <div class="color-swatch" style="background:#0f1440;"><div class="info"><span class="shade">800</span><span class="hex">#0F14</span></div></div>
+                        <div class="color-swatch" style="background:#0a0e2e;"><div class="info"><span class="shade">900</span><span class="hex">#0A0E</span></div></div>
+                        <div class="color-swatch" style="background:#060818;"><div class="info"><span class="shade">950</span><span class="hex">#0608</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Purple -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Fialová — Akcentní barva</h3>
+                    <p class="color-group-desc">CTA, aktivní prvky, glow efekty, zvýraznění. Nikdy ne jako plocha pozadí.</p>
+                    <div class="color-swatches">
+                        <div class="color-swatch" style="background:#FAF5FF;"><div class="info"><span class="shade" style="color:#390269;">50</span><span class="hex" style="color:#390269;">#FAF5</span></div></div>
+                        <div class="color-swatch" style="background:#F2E7FF;"><div class="info"><span class="shade" style="color:#390269;">100</span><span class="hex" style="color:#390269;">#F2E7</span></div></div>
+                        <div class="color-swatch" style="background:#E4CFFF;"><div class="info"><span class="shade" style="color:#390269;">200</span><span class="hex" style="color:#390269;">#E4CF</span></div></div>
+                        <div class="color-swatch" style="background:#D6B0FF;"><div class="info"><span class="shade">300</span><span class="hex">#D6B0</span></div></div>
+                        <div class="color-swatch" style="background:#BC7EFF;"><div class="info"><span class="shade">400</span><span class="hex">#BC7E</span></div></div>
+                        <div class="color-swatch" style="background:#A54CFF;"><div class="info"><span class="shade">500</span><span class="hex">#A54C</span></div></div>
+                        <div class="color-swatch" style="background:#8D2AF3;"><div class="info"><span class="shade">600</span><span class="hex">#8D2A</span></div></div>
+                        <div class="color-swatch" style="background:#7520CC;"><div class="info"><span class="shade">700</span><span class="hex">#7520</span></div></div>
+                        <div class="color-swatch" style="background:#55178C;"><div class="info"><span class="shade">800</span><span class="hex">#5517</span></div></div>
+                        <div class="color-swatch" style="background:#390269;"><div class="info"><span class="shade">900</span><span class="hex">#3902</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Blue -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Modrá — Podpůrná akcent</h3>
+                    <p class="color-group-desc">Sekundární CTA, interaktivní prvky, gradienty spolu s fialovou.</p>
+                    <div class="color-swatches">
+                        <div class="color-swatch" style="background:#EEF2FF;"><div class="info"><span class="shade" style="color:#181E4E;">50</span><span class="hex" style="color:#181E4E;">#EEF2</span></div></div>
+                        <div class="color-swatch" style="background:#D8E0FF;"><div class="info"><span class="shade" style="color:#181E4E;">100</span><span class="hex" style="color:#181E4E;">#D8E0</span></div></div>
+                        <div class="color-swatch" style="background:#B0C0FF;"><div class="info"><span class="shade" style="color:#181E4E;">200</span><span class="hex" style="color:#181E4E;">#B0C0</span></div></div>
+                        <div class="color-swatch" style="background:#8099FF;"><div class="info"><span class="shade">300</span><span class="hex">#8099</span></div></div>
+                        <div class="color-swatch" style="background:#506FFB;"><div class="info"><span class="shade">400</span><span class="hex">#506F</span></div></div>
+                        <div class="color-swatch" style="background:#3B4EF0;"><div class="info"><span class="shade">500</span><span class="hex">#3B4E</span></div></div>
+                        <div class="color-swatch" style="background:#2F3FCC;"><div class="info"><span class="shade">600</span><span class="hex">#2F3F</span></div></div>
+                        <div class="color-swatch" style="background:#283487;"><div class="info"><span class="shade">700</span><span class="hex">#2834</span></div></div>
+                        <div class="color-swatch" style="background:#1E275F;"><div class="info"><span class="shade">800</span><span class="hex">#1E27</span></div></div>
+                        <div class="color-swatch" style="background:#181E4E;"><div class="info"><span class="shade">900</span><span class="hex">#181E</span></div></div>
+                    </div>
+                </div>
+
+                <!-- Semantic -->
+                <div class="color-group">
+                    <h3 class="color-group-title">Sémantické barvy</h3>
+                    <div class="color-swatches" style="grid-template-columns:repeat(4,1fr);">
+                        <div class="color-swatch" style="background:#34D399;height:80px;"><div class="info"><span class="shade" style="color:#000;">Success</span><span class="hex" style="color:#000;">#34D399</span></div></div>
+                        <div class="color-swatch" style="background:#FBBF24;height:80px;"><div class="info"><span class="shade" style="color:#000;">Warning</span><span class="hex" style="color:#000;">#FBBF24</span></div></div>
+                        <div class="color-swatch" style="background:#F87171;height:80px;"><div class="info"><span class="shade">Error</span><span class="hex">#F87171</span></div></div>
+                        <div class="color-swatch" style="background:#506FFB;height:80px;"><div class="info"><span class="shade">Info</span><span class="hex">#506FFB</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 03 — TYPOGRAFIE -->
+    <section id="typography" class="fade-section">
+        <div class="container">
+            <span class="section-label">03 — Typografie</span>
+            <h2 class="section-title">Písma a texty</h2>
+            <p class="section-desc">Montserrat jako hlavní písmo — geometrický grotesk s moderním charakterem. Na tmavém pozadí výhradně Medium nebo Semi-bold.</p>
+
+            <div class="type-specimen">
+                <div class="type-family">
+                    <div class="type-family-header">
+                        <span class="type-family-name">Montserrat</span>
+                        <span class="type-family-meta">Primary Font · Google Fonts</span>
+                    </div>
+                    <div class="type-sample">Integrujeme AI do vašeho podnikání.</div>
+                    <div class="type-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                    <div class="type-alphabet">abcdefghijklmnopqrstuvwxyz</div>
+                    <div class="type-alphabet">0123456789 !@#$%^&*()</div>
+                    <div class="type-weights">
+                        <span class="type-weight" style="font-weight:300;">Light 300</span>
+                        <span class="type-weight" style="font-weight:400;">Regular 400</span>
+                        <span class="type-weight" style="font-weight:500;">Medium 500</span>
+                        <span class="type-weight" style="font-weight:600;">SemiBold 600</span>
+                        <span class="type-weight" style="font-weight:700;">Bold 700</span>
+                        <span class="type-weight" style="font-weight:800;">ExtraBold 800</span>
+                        <span class="type-weight" style="font-weight:900;">Black 900</span>
+                    </div>
+                </div>
+
+                <div class="type-family">
+                    <div class="type-family-header">
+                        <span class="type-family-name" style="font-family:var(--font-mono);">IBM Plex Mono</span>
+                        <span class="type-family-meta">Monospace · Labels & Code</span>
+                    </div>
+                    <div class="type-sample" style="font-family:var(--font-mono);font-size:2rem;">AI-powered automation</div>
+                    <div class="type-alphabet" style="font-family:var(--font-mono);">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+                    <div class="type-alphabet" style="font-family:var(--font-mono);">0123456789 {}[]();&lt;&gt;</div>
+                    <div class="type-weights">
+                        <span class="type-weight" style="font-family:var(--font-mono);font-weight:400;">Regular 400</span>
+                        <span class="type-weight" style="font-family:var(--font-mono);font-weight:500;">Medium 500</span>
+                        <span class="type-weight" style="font-family:var(--font-mono);font-weight:600;">SemiBold 600</span>
+                        <span class="type-weight" style="font-family:var(--font-mono);font-weight:700;">Bold 700</span>
+                    </div>
+                </div>
+
+                <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Typografická škála</h3>
+                <div class="type-scale">
+                    <div class="type-scale-item"><span class="type-scale-label">Display / 48px</span><span class="type-scale-sample" style="font-size:3rem;font-weight:800;">Praut s.r.o.</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">H1 / 36px</span><span class="type-scale-sample" style="font-size:2.25rem;font-weight:700;">Hlavní nadpis</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">H2 / 28px</span><span class="type-scale-sample" style="font-size:1.75rem;font-weight:700;">Sekce nadpis</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">H3 / 22px</span><span class="type-scale-sample" style="font-size:1.375rem;font-weight:600;">Podsekce</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">Body / 16px</span><span class="type-scale-sample" style="font-size:1rem;">Základní text pro odstavce. Min řádkování 130–150 %.</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">Small / 14px</span><span class="type-scale-sample" style="font-size:0.875rem;color:var(--purple-200);">Pomocný text, metadata, popisky</span></div>
+                    <div class="type-scale-item"><span class="type-scale-label">Caption / 12px</span><span class="type-scale-sample" style="font-size:0.75rem;color:var(--purple-500);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;">LABEL · BADGE · TAG</span></div>
+                </div>
+
+                <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Hierarchie barev textu</h3>
+                <div style="display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-4);">
+                    <div class="flex items-center gap-4"><span style="width:100px;font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-500);">Nadpisy</span><span style="font-size:1.5rem;font-weight:700;color:#FAF5FF;">#FAF5FF — Světlá levandulová</span></div>
+                    <div class="flex items-center gap-4"><span style="width:100px;font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-500);">Běžný text</span><span style="font-size:1rem;color:#E4CFFF;">#E4CFFF — Pastelová fialová</span></div>
+                    <div class="flex items-center gap-4"><span style="width:100px;font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-500);">Sekundární</span><span style="font-size:1rem;color:#D6B0FF;">#D6B0FF — Světlá fialová</span></div>
+                    <div class="flex items-center gap-4"><span style="width:100px;font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-500);">Zvýraznění</span><span style="font-size:1rem;font-weight:700;color:#8D2AF3;">#8D2AF3 — Tučně, klíčová slova</span></div>
+                    <div class="flex items-center gap-4"><span style="width:100px;font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-500);">Disabled</span><span style="font-size:1rem;color:#283487;">#283487 — Neaktivní, placeholder</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 04 — KOMPONENTY -->
+    <section id="components" class="fade-section">
+        <div class="container">
+            <span class="section-label">04 — Komponenty</span>
+            <h2 class="section-title">UI prvky</h2>
+            <p class="section-desc">Kompletní sada komponent pro tvorbu webových aplikací v brand identity Praut. Všechny komponenty jsou navrženy pro dark navy pozadí.</p>
+
+            <div class="components-grid">
+                <!-- Buttons -->
+                <div class="component-card">
+                    <h4 class="component-title">Tlačítka</h4>
+                    <div class="component-demo flex-col items-start gap-3">
+                        <div class="flex gap-3">
+                            <button class="btn btn-primary">Primary</button>
+                            <button class="btn btn-accent">Accent Blue</button>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="btn btn-secondary">Secondary</button>
+                            <button class="btn btn-outline">Outline</button>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="btn btn-ghost">Ghost</button>
+                            <button class="btn btn-danger">Danger</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button Sizes -->
+                <div class="component-card">
+                    <h4 class="component-title">Velikosti tlačítek</h4>
+                    <div class="component-demo items-center gap-3">
+                        <button class="btn btn-primary btn-sm">Small</button>
+                        <button class="btn btn-primary">Default</button>
+                        <button class="btn btn-primary btn-lg">Large</button>
+                    </div>
+                </div>
+
+                <!-- Badges Brand -->
+                <div class="component-card">
+                    <h4 class="component-title">Odznaky — Brand</h4>
+                    <div class="component-demo">
+                        <span class="badge badge-purple">Purple</span>
+                        <span class="badge badge-blue">Blue</span>
+                    </div>
+                </div>
+
+                <!-- Badges Semantic -->
+                <div class="component-card">
+                    <h4 class="component-title">Odznaky — Sémantické</h4>
+                    <div class="component-demo">
+                        <span class="badge badge-success">Aktivní</span>
+                        <span class="badge badge-warning">Čeká</span>
+                        <span class="badge badge-error">Chyba</span>
+                        <span class="badge badge-info">Info</span>
+                    </div>
+                </div>
+
+                <!-- Toggle -->
+                <div class="component-card">
+                    <h4 class="component-title">Přepínač</h4>
+                    <div class="component-demo">
+                        <div class="toggle"></div>
+                        <div class="toggle active"></div>
+                    </div>
+                </div>
+
+                <!-- Tooltip + Dropdown -->
+                <div class="component-card">
+                    <h4 class="component-title">Tooltip & Dropdown</h4>
+                    <div class="component-demo flex-col items-start gap-4" style="position:relative;min-height:140px;">
+                        <div class="tooltip-demo" style="margin-top:40px;">
+                            <button class="btn btn-secondary btn-sm">Najeď myší</button>
+                            <div class="tooltip-box">Tooltip zpráva</div>
+                        </div>
+                        <div class="dropdown-demo">
+                            <button class="btn btn-secondary btn-sm">Menu ▾</button>
+                            <div class="dropdown-menu" style="position:relative;top:4px;">
+                                <span class="dropdown-item">Profil</span>
+                                <span class="dropdown-item">Nastavení</span>
+                                <span class="dropdown-item" style="color:var(--error);">Odhlásit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="component-card">
+                    <h4 class="component-title">Progress Bar</h4>
+                    <div class="flex-col gap-4 w-full">
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm" style="color:var(--purple-200);">Upload</span><span class="text-sm" style="color:var(--purple-500);">73%</span></div>
+                            <div class="progress-track"><div class="progress-fill" style="width:73%;"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2"><span class="text-sm" style="color:var(--purple-200);">Processing</span><span class="text-sm" style="color:var(--purple-500);">35%</span></div>
+                            <div class="progress-track"><div class="progress-fill" style="width:35%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card -->
+                <div class="component-card">
+                    <h4 class="component-title">Karta</h4>
+                    <div class="card" style="max-width:100%;">
+                        <h3 style="color:white;font-size:1.125rem;margin-bottom:var(--space-2);">AI Automatizace</h3>
+                        <p style="color:var(--purple-300);font-size:0.875rem;margin-bottom:var(--space-4);">Implementace umělé inteligence do firemních procesů.</p>
+                        <div class="flex gap-3">
+                            <span class="badge badge-purple">AI</span>
+                            <span class="badge badge-success">Aktivní</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Alerty</h4>
+                    <div class="flex-col gap-3 w-full">
+                        <div class="alert alert-success"><span class="alert-icon">✓</span> Operace proběhla úspěšně.</div>
+                        <div class="alert alert-warning"><span class="alert-icon">⚠</span> Tato akce nelze vrátit zpět.</div>
+                        <div class="alert alert-error"><span class="alert-icon">✕</span> Nepodařilo se uložit změny.</div>
+                        <div class="alert alert-info"><span class="alert-icon">ℹ</span> Nová verze je k dispozici ke stažení.</div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Záložky (Tabs)</h4>
+                    <div class="tabs">
+                        <button class="tab active">Přehled</button>
+                        <button class="tab">Nastavení</button>
+                        <button class="tab">Statistiky</button>
+                        <button class="tab">Logy</button>
+                    </div>
+                </div>
+
+                <!-- Breadcrumbs -->
+                <div class="component-card">
+                    <h4 class="component-title">Breadcrumbs</h4>
+                    <div class="breadcrumbs">
+                        <a href="#">Domů</a>
+                        <span class="separator">›</span>
+                        <a href="#">Projekty</a>
+                        <span class="separator">›</span>
+                        <span class="current">PostHub</span>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="component-card">
+                    <h4 class="component-title">Stránkování</h4>
+                    <div class="pagination">
+                        <button class="page-btn disabled">‹</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">4</button>
+                        <button class="page-btn">›</button>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Tabulka</h4>
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr><th>Klient</th><th>Služba</th><th>Stav</th><th>MRR</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Hotel Regal</td><td>AI Chatbot</td><td><span class="badge badge-success">Aktivní</span></td><td>4 990 Kč</td></tr>
+                                <tr><td>MontexBau</td><td>Automatizace</td><td><span class="badge badge-warning">Testování</span></td><td>7 490 Kč</td></tr>
+                                <tr><td>Praut Academy</td><td>LMS Platforma</td><td><span class="badge badge-purple">Vývoj</span></td><td>—</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Modální okno</h4>
+                    <div class="modal-demo" style="max-width:480px;">
+                        <div class="modal-header">
+                            <h3>Potvrdit akci</h3>
+                            <button class="modal-close">✕</button>
+                        </div>
+                        <div class="modal-body">Opravdu chcete smazat tento projekt? Tato akce je nevratná.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary btn-sm">Zrušit</button>
+                            <button class="btn btn-danger btn-sm">Smazat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 05 — FORMULÁŘE -->
+    <section id="forms" class="fade-section">
+        <div class="container">
+            <span class="section-label">05 — Formuláře</span>
+            <h2 class="section-title">Formulářové prvky</h2>
+            <p class="section-desc">Vstupy s jemným purple glow efektem při fokusu. Vychází z barev webu — tmavé pozadí s fialovým zvýrazněním.</p>
+
+            <div class="components-grid">
+                <div class="component-card">
+                    <h4 class="component-title">Textové vstupy</h4>
+                    <div class="flex-col gap-3 w-full">
+                        <input type="text" class="input" placeholder="Zadejte jméno...">
+                        <input type="email" class="input" value="martin@praut.cz">
+                        <input type="text" class="input input-error" value="Neplatný vstup">
+                        <p class="text-sm" style="color:var(--error);margin-top:-8px;">Pole je povinné</p>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Select & Textarea</h4>
+                    <div class="flex-col gap-3 w-full">
+                        <select class="select">
+                            <option>Vyberte službu...</option>
+                            <option>AI Automatizace</option>
+                            <option>Custom vývoj</option>
+                            <option>Školení</option>
+                        </select>
+                        <textarea class="textarea" placeholder="Popište váš požadavek..."></textarea>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Checkbox & Radio</h4>
+                    <div class="flex-col gap-3">
+                        <label class="checkbox-wrapper">
+                            <div class="checkbox-custom checked"></div>
+                            <span>Souhlasím s podmínkami</span>
+                        </label>
+                        <label class="checkbox-wrapper">
+                            <div class="checkbox-custom"></div>
+                            <span>Odebírat newsletter</span>
+                        </label>
+                        <div style="height:8px;"></div>
+                        <label class="radio-wrapper">
+                            <div class="radio-custom checked"></div>
+                            <span>Měsíční platba</span>
+                        </label>
+                        <label class="radio-wrapper">
+                            <div class="radio-custom"></div>
+                            <span>Roční platba</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Ukázkový formulář</h4>
+                    <div style="max-width:500px;">
+                        <div class="flex-col gap-4">
+                            <div>
+                                <label style="display:block;font-size:0.875rem;color:var(--purple-200);margin-bottom:var(--space-2);font-weight:500;">Jméno *</label>
+                                <input type="text" class="input" placeholder="Martin Novák">
+                            </div>
+                            <div>
+                                <label style="display:block;font-size:0.875rem;color:var(--purple-200);margin-bottom:var(--space-2);font-weight:500;">Email *</label>
+                                <input type="email" class="input" placeholder="email@firma.cz">
+                            </div>
+                            <div>
+                                <label style="display:block;font-size:0.875rem;color:var(--purple-200);margin-bottom:var(--space-2);font-weight:500;">Služba</label>
+                                <select class="select">
+                                    <option>Vyberte...</option>
+                                    <option>AI Automatizace</option>
+                                    <option>PostHub SaaS</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display:block;font-size:0.875rem;color:var(--purple-200);margin-bottom:var(--space-2);font-weight:500;">Zpráva</label>
+                                <textarea class="textarea" placeholder="Popište váš projekt..." rows="3"></textarea>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="btn btn-primary">Odeslat</button>
+                                <button class="btn btn-secondary">Zrušit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 06 — NAVIGACE -->
+    <section id="navigation" class="fade-section">
+        <div class="container">
+            <span class="section-label">06 — Navigace</span>
+            <h2 class="section-title">Navigační prvky</h2>
+            <p class="section-desc">Navbar, sidebar a navigační vzory. Průhledné pozadí s blur efektem pro navbar — přesně jak vidíte na screenshotech webu.</p>
+
+            <div class="components-grid">
+                <div class="component-card component-card-full">
+                    <h4 class="component-title">Navigační lišta</h4>
+                    <div class="navbar-demo">
+                        <span class="navbar-brand">PRAUT</span>
+                        <div class="navbar-links">
+                            <a href="#" class="active">Přehled</a>
+                            <a href="#">Projekty</a>
+                            <a href="#">Klienti</a>
+                            <a href="#">Nastavení</a>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Přihlásit</button>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Sidebar</h4>
+                    <div class="sidebar-demo">
+                        <div class="sidebar-item active"><span class="icon">◉</span> Dashboard</div>
+                        <div class="sidebar-item"><span class="icon">◈</span> Projekty</div>
+                        <div class="sidebar-item"><span class="icon">◇</span> Klienti</div>
+                        <div class="sidebar-item"><span class="icon">▤</span> Analytika</div>
+                        <div class="sidebar-item"><span class="icon">⚙</span> Nastavení</div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Navigační vzory</h4>
+                    <div class="flex-col gap-6">
+                        <div>
+                            <p class="text-sm mb-2" style="color:var(--purple-500);">Breadcrumbs + akce</p>
+                            <div class="flex justify-between items-center">
+                                <div class="breadcrumbs">
+                                    <a href="#">Projekty</a>
+                                    <span class="separator">›</span>
+                                    <span class="current">PostHub</span>
+                                </div>
+                                <button class="btn btn-primary btn-sm">Upravit</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-2" style="color:var(--purple-500);">Stránkování s info</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm" style="color:var(--purple-300);">Zobrazeno 1–10 z 48</span>
+                                <div class="pagination">
+                                    <button class="page-btn disabled">‹</button>
+                                    <button class="page-btn active">1</button>
+                                    <button class="page-btn">2</button>
+                                    <button class="page-btn">3</button>
+                                    <button class="page-btn">›</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 07 — SPACING -->
+    <section id="spacing" class="fade-section">
+        <div class="container">
+            <span class="section-label">07 — Rozestupy</span>
+            <h2 class="section-title">Spacing systém</h2>
+            <p class="section-desc">Konzistentní rozestupy založené na 4px jednotce.</p>
+
+            <div class="spacing-demo">
+                <div class="spacing-item"><div class="spacing-box" style="width:4px;height:24px;"></div><div><span class="spacing-label">space-1</span> <span class="spacing-value">4px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:8px;height:24px;"></div><div><span class="spacing-label">space-2</span> <span class="spacing-value">8px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:12px;height:24px;"></div><div><span class="spacing-label">space-3</span> <span class="spacing-value">12px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:16px;height:24px;"></div><div><span class="spacing-label">space-4</span> <span class="spacing-value">16px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:24px;height:24px;"></div><div><span class="spacing-label">space-6</span> <span class="spacing-value">24px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:32px;height:24px;"></div><div><span class="spacing-label">space-8</span> <span class="spacing-value">32px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:48px;height:24px;"></div><div><span class="spacing-label">space-12</span> <span class="spacing-value">48px</span></div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width:64px;height:24px;"></div><div><span class="spacing-label">space-16</span> <span class="spacing-value">64px</span></div></div>
+            </div>
+
+            <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Border Radius</h3>
+            <div class="spacing-demo">
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-sm);"></div><div><span class="spacing-label">sm</span> <span class="spacing-value">4px</span></div></div>
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-md);"></div><div><span class="spacing-label">md</span> <span class="spacing-value">8px</span></div></div>
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-lg);"></div><div><span class="spacing-label">lg</span> <span class="spacing-value">12px</span></div></div>
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-xl);"></div><div><span class="spacing-label">xl</span> <span class="spacing-value">16px</span></div></div>
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-2xl);"></div><div><span class="spacing-label">2xl</span> <span class="spacing-value">24px</span></div></div>
+                <div class="spacing-item"><div style="width:48px;height:48px;background:var(--gradient-brand);border-radius:var(--radius-full);"></div><div><span class="spacing-label">full</span> <span class="spacing-value">9999px</span></div></div>
+            </div>
+
+            <h3 class="mt-12" style="color:white;margin-bottom:var(--space-4);">Shadows & Glow</h3>
+            <div class="spacing-demo" style="gap:var(--space-8);">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+                    <div style="width:80px;height:80px;background:var(--surface-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);"></div>
+                    <span class="spacing-label">shadow-sm</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+                    <div style="width:80px;height:80px;background:var(--surface-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);"></div>
+                    <span class="spacing-label">shadow-lg</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+                    <div style="width:80px;height:80px;background:var(--surface-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-glow);"></div>
+                    <span class="spacing-label">shadow-glow</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-3);">
+                    <div style="width:80px;height:80px;background:var(--surface-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-glow-lg);"></div>
+                    <span class="spacing-label">shadow-glow-lg</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 08 — DARK MODE -->
+    <section id="darkmode" class="fade-section">
+        <div class="container">
+            <span class="section-label">08 — Dark Mode</span>
+            <h2 class="section-title">Práce s dark mode</h2>
+            <p class="section-desc">Dark mode je primární. Vrstvy hloubky jsou definovány tónem navy modré — nikoli fialové.</p>
+
+            <div class="components-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+                <div class="component-card">
+                    <h4 class="component-title">Hloubka vrstev</h4>
+                    <div class="flex-col gap-3">
+                        <div style="padding:16px;background:#0a0e2e;border-radius:var(--radius-md);border:1px solid rgba(141,42,243,0.1);font-size:0.875rem;color:var(--purple-400);">
+                            Pozadí stránky — #0a0e2e
+                            <div style="padding:12px;background:#0f1440;border-radius:var(--radius-md);margin-top:8px;color:var(--purple-300);border:1px solid rgba(141,42,243,0.12);">
+                                Karta — #0f1440
+                                <div style="padding:10px;background:#141a52;border-radius:var(--radius-md);margin-top:8px;color:var(--purple-100);">
+                                    Vystouplý prvek — #141a52
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-sm" style="color:var(--purple-500);">Tmavší navy = hlubší. Fialová jen jako akcent.</p>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Glow efekt</h4>
+                    <div class="flex-col gap-4 items-center" style="padding:20px 0;">
+                        <button class="btn btn-primary" style="box-shadow:0 0 30px rgba(141,42,243,0.55),0 0 60px rgba(141,42,243,0.2);">CTA s glow</button>
+                        <p class="text-sm" style="color:var(--purple-500);">Glow: rgba(141,42,243,0.5) + blur</p>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Surface barvy</h4>
+                    <div class="flex-col gap-3">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:var(--navy-900);border:1px solid rgba(255,255,255,0.1);flex-shrink:0;"></div>
+                            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-400);">--navy-900 · Pozadí</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:var(--surface-1);border:1px solid rgba(255,255,255,0.05);flex-shrink:0;"></div>
+                            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-400);">--surface-1 · Karta</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:var(--surface-2);border:1px solid rgba(255,255,255,0.05);flex-shrink:0;"></div>
+                            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-400);">--surface-2 · Zvýšená karta</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:40px;height:40px;border-radius:8px;background:var(--surface-3);border:1px solid rgba(141,42,243,0.2);flex-shrink:0;"></div>
+                            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--purple-400);">--surface-3 · Fialová karta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h4 class="component-title">Ikony</h4>
+                    <div class="flex gap-6 items-center" style="padding:16px 0;">
+                        <span style="font-size:1.5rem;color:var(--purple-50);">◉</span>
+                        <span style="font-size:1.5rem;color:var(--purple-300);">◈</span>
+                        <span style="font-size:1.5rem;color:var(--purple-600);">◇</span>
+                        <span style="font-size:1.5rem;color:var(--blue-400);">▤</span>
+                    </div>
+                    <p class="text-sm" style="color:var(--purple-500);">Lineární, světlé: #FAF5FF, #D6B0FF, #8D2AF3</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════ 09 — PRAVIDLA -->
+    <section id="guidelines" class="fade-section">
+        <div class="container">
+            <span class="section-label">09 — Pravidla</span>
+            <h2 class="section-title">Použití značky</h2>
+            <p class="section-desc">Dodržujte tato pravidla pro konzistentní prezentaci značky Praut.</p>
+
+            <div class="dos-donts">
+                <div class="do-item"><span class="label">✓ Správně</span><p>Navy (#0a0e2e) jako základ — na všech výstupech webu i platformy</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>Čistě černé (#000000) nebo čistě fialové pozadí jako hlavní plocha</p></div>
+
+                <div class="do-item"><span class="label">✓ Správně</span><p>Fialová (#8D2AF3) jen jako akcent — CTA, glow, zvýraznění, aktivní prvky</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>Fialové plochy jako primární pozadí sekcí nebo stránek</p></div>
+
+                <div class="do-item"><span class="label">✓ Správně</span><p>Dodržujte pravidlo 60-30-10 pro rozložení barev</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>Tmavé na tmavém nebo světlé na světlém bez kontrastu</p></div>
+
+                <div class="do-item"><span class="label">✓ Správně</span><p>Montserrat Medium/SemiBold pro text na tmavém pozadí</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>#BC7EFF jako hlavní text — slabý kontrast na navy pozadí</p></div>
+
+                <div class="do-item"><span class="label">✓ Správně</span><p>Glow efekt (#8D2AF3 + blur) pro zvýraznění CTA a fokus stavů</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>Klasické černé drop shadows — neladí s dark mode</p></div>
+
+                <div class="do-item"><span class="label">✓ Správně</span><p>Zachovávejte ochrannou zónu kolem loga (výška písmene P)</p></div>
+                <div class="dont-item"><span class="label">✗ Špatně</span><p>Logo přilepené k okrajům nebo přes jiné grafické prvky</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div style="display:flex;justify-content:center;margin-bottom:var(--space-6);">
+                <div class="logo-hero" style="padding:12px 24px;">
+                    <svg width="160" height="34" style="max-width:100%;" viewBox="0 0 433 91" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M150.908 55.65H134.174V29.2777H172.612C177.743 29.2777 182.08 25.0732 181.992 19.9348C181.908 14.9425 177.824 10.9071 172.819 10.9071H139.931V17.3099H173.698C175.287 17.3099 176.577 18.6012 176.577 20.1923C176.577 21.7834 175.287 23.0748 173.698 23.0748H134.174V5.14224H172.539C180.691 5.14224 187.553 11.572 187.745 19.735C187.937 27.898 181.171 35.0464 172.819 35.0464H139.931V49.889H145.151V38.6398H150.908V55.6538V55.65Z" fill="url(#ft_g0)"/>
+<path d="M250.616 55.65H230.232L221.904 44.7583H210.486V55.65H193.752V29.2777H232.19C237.321 29.2777 241.658 25.0732 241.57 19.9348C241.486 14.9425 237.402 10.9071 232.397 10.9071H199.509V17.3099H233.184C234.773 17.3099 236.062 18.6012 236.062 20.1923C236.062 21.7834 234.773 23.0748 233.184 23.0748H193.752V5.14224H232.117C240.269 5.14224 247.131 11.572 247.323 19.735C247.523 28.144 240.749 35.0464 232.397 35.0464H199.509V49.889H204.729V38.9973H224.748L233.077 49.889H239.041L230.835 39.0357H238.054L250.616 55.6538V55.65Z" fill="url(#ft_g1)"/>
+<path d="M318.204 55.65H300.104L290.67 39.0318H297.291L303.455 49.8851H308.398L293.936 23.9433L276.224 55.65H256.703L284.721 5.27675H291.311L266.498 49.8851H272.85L293.94 12.1215L318.204 55.65Z" fill="url(#ft_g2)"/>
+<path d="M345.865 56.2418C330.931 56.2418 318.784 44.078 318.784 29.124V5.14224H335.909V28.4361C335.909 33.9895 340.419 38.5053 345.965 38.5053C351.511 38.5053 356.02 33.9895 356.02 28.4361V6.25678H361.777V28.4322C361.777 37.164 354.685 44.2663 345.965 44.2663C337.245 44.2663 330.152 37.164 330.152 28.4322V10.9071H324.541V29.1202C324.541 40.8958 334.109 50.4731 345.865 50.4731C357.621 50.4731 367.189 40.892 367.189 29.1202V6.25678H372.946V29.1202C372.946 44.0742 360.799 56.238 345.865 56.238V56.2418Z" fill="url(#ft_g3)"/>
+<path d="M415.065 55.65H397.943V23.0748H380.891V6.17223H433V23.0748H421.006V17.3099H427.243V11.9371H386.648V17.3099H403.7V49.8851H409.308V18.3284H415.065V55.65Z" fill="url(#ft_g4)"/>
+<path d="M100.745 13.924L61.7387 0L33.8093 2.16758L13.5253 13.4129L7.5571 19.3891L2.40645 27.3254L0 36.1609V43.3708L15.7513 62.3795L36.4499 62.0105L53.3372 78.7247L58.3382 74.551L58.2768 76.7647L76.968 91.0077H87.2924L80.8829 77.6371L78.1233 74.4472L87.4613 69.6316L98.3306 60.3041L107.127 44.6852L100.745 13.9317V13.924ZM35.3944 7.45587L61.0133 5.46892L96.0892 17.9902L97.421 24.416H77.4286L70.8272 31.6221H49.6988L45.8454 25.177L50.689 19.5697H63.6731C64.529 20.9917 66.0795 21.9448 67.8565 21.9448C70.5547 21.9448 72.7424 19.7542 72.7424 17.0524C72.7424 14.3506 70.5547 12.16 67.8565 12.16C66.2331 12.16 64.7976 12.9555 63.911 14.1777H48.2288L42.9362 20.3038L41.0824 17.2061H17.8085L35.3982 7.45587H35.3944ZM94.1011 56.8183L84.433 65.1197L69.5645 72.7908L76.3386 80.6194L78.699 85.5465L63.7345 74.1436L64.0415 62.7676L53.6404 71.4456L38.6184 56.5762L18.2384 56.9413L17.298 55.8037L18.9446 50.7883H19.3437C20.2226 52.0758 21.7003 52.9213 23.3775 52.9213C26.0756 52.9213 28.2633 50.7306 28.2633 48.0288C28.2633 45.3271 26.0756 43.1364 23.3775 43.1364C21.6504 43.1364 20.1344 44.0357 19.267 45.3924H15.0451L13.2374 50.8997L5.38477 41.4223V37.0141H31.6984L39.9502 49.3163H42.4602L48.7853 59.6623H53.5368C54.4119 60.9844 55.9087 61.8568 57.6128 61.8568C60.311 61.8568 62.4986 59.6661 62.4986 56.9644C62.4986 54.2626 60.311 52.0719 57.6128 52.0719C55.9087 52.0719 54.4119 52.9443 53.5368 54.2664H51.802L48.7738 49.3163H67.9448L72.1628 56.1112H94.5002L94.1011 56.8183ZM97.5399 50.7153H75.1565L70.9385 43.9204H42.821L34.5692 31.6183H6.8202L7.38055 29.5544L11.7636 22.8019L11.967 22.5982H38.0235L46.6437 37.0141H73.1953L79.7967 29.8081H98.5417L100.177 37.6829H87.5342C86.6438 36.4915 85.2275 35.719 83.6271 35.719C80.9289 35.719 78.7412 37.9096 78.7412 40.6114C78.7412 43.3132 80.9289 45.5038 83.6271 45.5038C85.4271 45.5038 86.993 44.5277 87.8412 43.0788H101.294L101.443 43.7936L97.5399 50.7191V50.7153Z" fill="url(#ft_g5)"/>
+<path d="M134.784 90.7771L139.536 77.8638H140.864L145.615 90.7771H144.253L140.2 79.5625L136.147 90.7771H134.784ZM136.957 87.2913L137.344 86.2229H143.036L143.424 87.2913H136.957Z" fill="url(#ft_g6)"/>
+<path d="M171.902 91C171.031 91 170.24 90.8271 169.534 90.485C168.828 90.1391 168.267 89.6011 167.849 88.8708C167.431 88.1406 167.223 87.2067 167.223 86.0768V77.8677H168.513V86.096C168.513 86.9685 168.659 87.6871 168.947 88.2444C169.235 88.8055 169.638 89.2129 170.152 89.4704C170.666 89.7279 171.257 89.8586 171.921 89.8586C172.585 89.8586 173.188 89.7279 173.69 89.4704C174.193 89.2129 174.589 88.8017 174.869 88.2444C175.153 87.6833 175.291 86.9685 175.291 86.096V77.8677H176.581V86.0768C176.581 87.2067 176.373 88.1406 175.955 88.8708C175.537 89.6011 174.976 90.1391 174.27 90.485C173.564 90.8309 172.773 91 171.902 91Z" fill="url(#ft_g7)"/>
+<path d="M202.576 90.7771V78.9323H198.707V77.8638H207.734V78.9323H203.865V90.7771H202.576Z" fill="url(#ft_g8)"/>
+<path d="M234.946 91C233.717 91 232.635 90.7194 231.702 90.1622C230.77 89.6011 230.041 88.8209 229.519 87.8178C228.997 86.8147 228.736 85.6502 228.736 84.3205C228.736 82.9907 228.997 81.8454 229.519 80.8423C230.041 79.8393 230.77 79.0552 231.702 78.4903C232.635 77.9253 233.717 77.6409 234.946 77.6409C236.174 77.6409 237.31 77.9253 238.242 78.4903C239.175 79.0552 239.901 79.8393 240.415 80.8423C240.929 81.8454 241.19 83.0022 241.19 84.3205C241.19 85.6387 240.933 86.8147 240.415 87.8178C239.901 88.8209 239.175 89.6011 238.242 90.1622C237.31 90.7233 236.208 91 234.946 91ZM234.965 89.8739C235.936 89.8739 236.788 89.651 237.525 89.2091C238.262 88.7671 238.837 88.1291 239.248 87.299C239.659 86.4688 239.866 85.4773 239.866 84.3205C239.866 83.1637 239.659 82.1759 239.248 81.3496C238.837 80.5272 238.262 79.8931 237.525 79.4511C236.788 79.0091 235.936 78.7862 234.965 78.7862C233.994 78.7862 233.142 79.0091 232.405 79.4511C231.668 79.8931 231.092 80.5272 230.682 81.3496C230.271 82.1721 230.064 83.1637 230.064 84.3205C230.064 85.4773 230.271 86.4688 230.682 87.299C231.092 88.1291 231.668 88.7671 232.405 89.2091C233.142 89.651 233.994 89.8739 234.965 89.8739Z" fill="url(#ft_g9)"/>
+<path d="M263.796 90.7771V77.8638H265.27L270.021 87.1798L274.758 77.8638H276.251V90.7771H274.961V80.2236L270.501 88.9669H269.542L265.082 80.2582V90.7733H263.792L263.796 90.7771Z" fill="url(#ft_g10)"/>
+<path d="M298.557 90.7771L303.309 77.8638H304.637L309.388 90.7771H308.026L303.973 79.5625L299.92 90.7771H298.557ZM300.733 87.2913L301.121 86.2229H306.813L307.201 87.2913H300.733Z" fill="url(#ft_g11)"/>
+<path d="M333.23 90.7771V78.9323H329.361V77.8638H338.388V78.9323H334.52V90.7771H333.23Z" fill="url(#ft_g12)"/>
+<path d="M360.661 90.7771V77.8638H361.95V90.7771H360.661Z" fill="url(#ft_g13)"/>
+<path d="M390.762 91C389.534 91 388.452 90.7194 387.519 90.1622C386.587 89.6011 385.857 88.8209 385.335 87.8178C384.813 86.8147 384.552 85.6502 384.552 84.3205C384.552 82.9907 384.813 81.8454 385.335 80.8423C385.857 79.8393 386.587 79.0552 387.519 78.4903C388.452 77.9253 389.534 77.6409 390.762 77.6409C391.991 77.6409 393.127 77.9253 394.059 78.4903C394.992 79.0552 395.717 79.8393 396.232 80.8423C396.746 81.8454 397.007 83.0022 397.007 84.3205C397.007 85.6387 396.75 86.8147 396.232 87.8178C395.717 88.8209 394.992 89.6011 394.059 90.1622C393.127 90.7233 392.025 91 390.762 91ZM390.782 89.8739C391.753 89.8739 392.605 89.651 393.342 89.2091C394.078 88.7671 394.654 88.1291 395.065 87.299C395.475 86.4688 395.683 85.4773 395.683 84.3205C395.683 83.1637 395.475 82.1759 395.065 81.3496C394.654 80.5272 394.078 79.8931 393.342 79.4511C392.605 79.0091 391.753 78.7862 390.782 78.7862C389.811 78.7862 388.958 79.0091 388.222 79.4511C387.485 79.8931 386.909 80.5272 386.498 81.3496C386.088 82.1721 385.88 83.1637 385.88 84.3205C385.88 85.4773 386.088 86.4688 386.498 87.299C386.909 88.1291 387.485 88.7671 388.222 89.2091C388.958 89.651 389.811 89.8739 390.782 89.8739Z" fill="url(#ft_g14)"/>
+<path d="M419.613 90.7771V77.8638H420.902L428.034 88.6172V77.8638H429.323V90.7771H428.034L420.902 80.0045V90.7771H419.613Z" fill="url(#ft_g15)"/>
+<defs>
+<linearGradient id="ft_g0" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g1" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g2" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g3" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g4" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g5" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g6" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g7" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g8" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g9" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g10" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g11" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g12" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g13" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g14" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+<linearGradient id="ft_g15" x1="0" y1="45.5" x2="433" y2="45.5" gradientUnits="userSpaceOnUse"><stop stop-color="#9FBFFF"/><stop offset="1" stop-color="#D6B0FF"/></linearGradient>
+</defs>
+</svg>
+                </div>
+            </div>
+            <p>Visual Book & Design System v2.0 — 2025</p>
+            <p style="margin-top:var(--space-2);">Praut s.r.o. — Pro interní použití · Sjednocená identita</p>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive toggles
+        document.querySelectorAll('.toggle').forEach(t => {
+            t.addEventListener('click', () => t.classList.toggle('active'));
+        });
+
+        // Interactive tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                tab.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Interactive checkboxes/radios
+        document.querySelectorAll('.checkbox-custom').forEach(cb => {
+            cb.parentElement.addEventListener('click', () => cb.classList.toggle('checked'));
+        });
+        document.querySelectorAll('.radio-custom').forEach(rb => {
+            rb.parentElement.addEventListener('click', () => {
+                rb.closest('.flex-col, .component-demo').querySelectorAll('.radio-custom').forEach(r => r.classList.remove('checked'));
+                rb.classList.add('checked');
+            });
+        });
+
+        // Interactive pagination
+        document.querySelectorAll('.pagination').forEach(pag => {
+            pag.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    pag.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
+
+        // Navigation highlight
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.toc a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                if (scrollY >= s.offsetTop - 300) current = s.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
